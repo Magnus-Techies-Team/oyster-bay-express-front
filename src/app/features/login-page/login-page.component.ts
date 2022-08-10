@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { validationConstraints } from '@shared/constraints/validation-constraints';
 import { UserFacade } from '@core/+state/user/state/facade';
 import { AuthOption, authOptions, AuthOptionsType } from './models/auth-options';
@@ -11,9 +11,9 @@ import { AuthOption, authOptions, AuthOptionsType } from './models/auth-options'
 })
 export class LoginPageComponent implements OnInit {
 
-    public signInForm: FormGroup;
+    public signInForm: UntypedFormGroup;
 
-    public signUpForm: FormGroup;
+    public signUpForm: UntypedFormGroup;
 
     public selectedAuthOption: AuthOptionsType = AuthOptionsType.SIGN_IN;
 
@@ -29,7 +29,7 @@ export class LoginPageComponent implements OnInit {
 
     
     
-    constructor(private formBuilder: FormBuilder,
+    constructor(private formBuilder: UntypedFormBuilder,
                 private userFacade: UserFacade) {
         this.signInForm = this.formBuilder.group({
             login: [null, [Validators.required, Validators.max(validationConstraints.LOGIN_MAX_LENGTH)]],
