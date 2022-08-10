@@ -1,0 +1,73 @@
+<mat-form-field appearance="fill">
+    <mat-label>Select auth</mat-label>
+    <mat-select [(ngModel)]="selectedAuthOption"
+                [placeholder]="'Auth type'"
+                multiple>
+        <mat-option *ngFor="let option of authOptions"
+                    [value]="option.type">
+            {{option.title}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+
+<div [ngSwitch]="selectedAuthOption">
+    <div *ngSwitchCase="authOptionsType.SIGN_IN"
+         [formGroup]="signInForm">
+        <ng-container *ngTemplateOutlet="loginTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="passwordTemplate"></ng-container>
+    </div>
+
+    <div *ngSwitchCase="authOptionsType.SIGN_UP"
+         [formGroup]="signUpForm">
+        <mat-form-field>
+            <mat-label>Enter email</mat-label>
+            <input  [formControlName]="'email'"
+                    [placeholder]="'Your email'"
+                    matInput
+                    type="text">
+            <mat-error *ngIf="signInForm.hasError('email')">
+                Enter a valid email
+            </mat-error>
+            <mat-error *ngIf="signUpForm.hasError('required')">
+                Email is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <ng-container *ngTemplateOutlet="loginTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="passwordTemplate"></ng-container>
+    </div>
+</div>
+
+<ng-template #loginTemplate>
+    <mat-form-field>
+        <mat-label>Enter login</mat-label>
+        <input  [formControlName]="'login'"
+                [placeholder]="'Your login'"
+                matInput
+                type="text">
+        <mat-error *ngIf="signInForm.hasError('max')">
+            Max length is {{validationConstraints.LOGIN_MAX_LENGTH}}
+        </mat-error>
+        <mat-error *ngIf="signUpForm.hasError('required')">
+            Login is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+</ng-template>
+
+<ng-template #passwordTemplate>
+    <mat-form-field>
+        <mat-label>Enter password</mat-label>
+        <input  [formControlName]="'password'"
+                [placeholder]="'Your password'"
+                matInput
+                type="text">
+        <mat-error *ngIf="signInForm.hasError('max')">
+            Max length is {{validationConstraints.PASSWORD_MAX_LENGTH}}
+        </mat-error>
+        <mat-error *ngIf="signUpForm.hasError('required')">
+            Password is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+</ng-template>
+
