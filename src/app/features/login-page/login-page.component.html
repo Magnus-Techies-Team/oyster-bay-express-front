@@ -2,7 +2,7 @@
     <mat-label>Select auth</mat-label>
     <mat-select [(ngModel)]="selectedAuthOption"
                 [placeholder]="'Auth type'"
-                multiple>
+                >
         <mat-option *ngFor="let option of authOptions"
                     [value]="option.type">
             {{option.title}}
@@ -14,8 +14,10 @@
 <div [ngSwitch]="selectedAuthOption">
     <div *ngSwitchCase="authOptionsType.SIGN_IN"
          [formGroup]="signInForm">
-        <ng-container *ngTemplateOutlet="loginTemplate"></ng-container>
-        <ng-container *ngTemplateOutlet="passwordTemplate"></ng-container>
+        <ng-container [ngTemplateOutlet]="loginTemplate"
+                      [ngTemplateOutletContext]="{formGroup: signInForm}"></ng-container>
+        <ng-container [ngTemplateOutlet]="passwordTemplate"
+                      [ngTemplateOutletContext]="{formGroup: signInForm}"></ng-container>
     </div>
 
     <div *ngSwitchCase="authOptionsType.SIGN_UP"
@@ -34,13 +36,15 @@
             </mat-error>
         </mat-form-field>
 
-        <ng-container *ngTemplateOutlet="loginTemplate"></ng-container>
-        <ng-container *ngTemplateOutlet="passwordTemplate"></ng-container>
+        <ng-container [ngTemplateOutlet]="loginTemplate"
+                      [ngTemplateOutletContext]="{formGroup: signUpForm}"></ng-container>
+        <ng-container [ngTemplateOutlet]="passwordTemplate"
+                      [ngTemplateOutletContext]="{formGroup: signUpForm}"></ng-container>
     </div>
 </div>
 
-<ng-template #loginTemplate>
-    <mat-form-field>
+<ng-template #loginTemplate let-formGroup=formGroup>
+    <mat-form-field [formGroup]="formGroup">
         <mat-label>Enter login</mat-label>
         <input  [formControlName]="'login'"
                 [placeholder]="'Your login'"
@@ -55,8 +59,8 @@
     </mat-form-field>
 </ng-template>
 
-<ng-template #passwordTemplate>
-    <mat-form-field>
+<ng-template #passwordTemplate let-formGroup=formGroup>
+    <mat-form-field [formGroup]="formGroup">
         <mat-label>Enter password</mat-label>
         <input  [formControlName]="'password'"
                 [placeholder]="'Your password'"

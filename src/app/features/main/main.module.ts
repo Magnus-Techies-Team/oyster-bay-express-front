@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { MainComponent, MainPageRouterModule } from '@main-module';
+import { MainComponent } from '@main-module';
+import { MainPageRouterModule } from '@main-module/router/main-page-router.module';
 
 @NgModule({
     imports: [

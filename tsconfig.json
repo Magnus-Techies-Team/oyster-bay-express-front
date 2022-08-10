@@ -28,7 +28,9 @@
       "@shared": ["./src/app/shared/index.ts"],
       "@shared/*": ["./src/app/shared/*"],
       "@login-module": ["./src/app/features/login-page/index.ts"],
-      "@main-module": ["./src/app/features/main/index.ts"]
+      "@login-module/*": ["./src/app/features/login-page/*"],
+      "@main-module": ["./src/app/features/main/index.ts"],
+      "@main-module/*": ["./src/app/features/main/*"],
     }
   },
   "angularCompilerOptions": {

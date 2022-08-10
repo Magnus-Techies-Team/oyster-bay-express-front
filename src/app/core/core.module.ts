@@ -13,8 +13,9 @@ import { MainPageRouterService } from '@main-module';
 import { RouterEffectModule } from '@core/+state/router/effect/router-effect-module';
 import { PrivateGuard } from '@core/guards/private-guard/private-guard';
 import { InitGuard } from '@core/guards/init-guard/init-guard';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from '@core/services/auth-service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     imports: [
@@ -28,6 +29,10 @@ import { CommonModule } from '@angular/common';
         
         // router effect
         RouterEffectModule,
+        
+        // common
+        HttpClientModule,
+        BrowserAnimationsModule,
     ],
     declarations: [],
     providers: [
@@ -40,6 +45,7 @@ import { CommonModule } from '@angular/common';
         BaseService,
         ApiService,
         UserService,
+        AuthService,
         
         // router services
         LoginPageRouterService,
@@ -49,21 +55,21 @@ import { CommonModule } from '@angular/common';
             useClass: ErrorInterceptor,
         },
     ],
-    exports: [
-        // common
-        ReactiveFormsModule,
-        CommonModule,
-
-        // init state and effect
-        InitStateModule,
-        InitEffectModule,
-
-        // user state and effect
-        UserStateModule,
-        UserEffectModule,
-
-        // router effect
-        RouterEffectModule,
-    ],
+    // exports: [
+    //     // common
+    //     ReactiveFormsModule,
+    //     CommonModule,
+    //
+    //     // init state and effect
+    //     InitStateModule,
+    //     InitEffectModule,
+    //
+    //     // user state and effect
+    //     UserStateModule,
+    //     UserEffectModule,
+    //
+    //     // router effect
+    //     RouterEffectModule,
+    // ],
 })
 export class CoreModule {}

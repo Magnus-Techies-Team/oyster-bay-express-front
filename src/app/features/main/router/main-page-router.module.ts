@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { mainPageRoutes } from '@main-module';
+import { mainPageRoutes } from '@main-module/router/routes';
 
 
 
