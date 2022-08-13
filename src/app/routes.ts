@@ -14,9 +14,13 @@ export const routes:Routes = [
                 canActivate: [PublicGuard],
             },
             {
-                path: '',
-                loadChildren: () => import('@main-module').then(m => m.MainModule),
+                path: 'main',
+                loadChildren: () => import('@main-module').then(m => m.MainPageModule),
                 canActivate: [PrivateGuard],
+            },
+            {
+                path: '**',
+                redirectTo: 'main',
             },
         ],
     },

@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BaseService } from '@core/services/base-service';
 import { Observable } from 'rxjs';
 import { UserResponse } from '@shared/models/DTO/responses/user/user-response';
 import { UserSignInRequest } from '@shared/models/DTO/requests/user-auth/user-sign-in-request';
 import { UserSignUpRequest } from '@shared/models/DTO/requests/user-auth/user-sign-up-request';
+import { APP_CONFIG } from '@shared/constraints/config-injection-token';
+import { IConfig } from '@shared';
 
 @Injectable()
 export class AuthService {
@@ -13,17 +14,17 @@ export class AuthService {
 
     private readonly apiUrl: string;
 
-    constructor(private http: HttpClient,
-                private baseService: BaseService) {
-        this.apiUrl = this.baseService.getConfigData('api');
+    constructor(@Inject(APP_CONFIG) private config: IConfig,
+                private http: HttpClient) {
+        this.apiUrl = this.config.api;
     }
 
     public signIn(signInReq: UserSignInRequest): Observable<UserResponse> {
-        return this.http.post<UserResponse>(this.apiUrl + this.apiRoute + '/login', { signInReq });
+        return this.http.post<UserResponse>(this.apiUrl + this.apiRoute + '/login', signInReq);
     }
 
     public signUp(signUpReq: UserSignUpRequest): Observable<UserResponse> {
-        return this.http.post<UserResponse>(this.apiUrl + this.apiRoute + '/createUser', { signUpReq });
+        return this.http.post<UserResponse>(this.apiUrl + this.apiRoute + '/createUser', signUpReq );
     }
 
     public logOut(): Observable<void> {

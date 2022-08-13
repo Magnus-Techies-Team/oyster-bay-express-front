@@ -18,6 +18,12 @@
                       [ngTemplateOutletContext]="{formGroup: signInForm}"></ng-container>
         <ng-container [ngTemplateOutlet]="passwordTemplate"
                       [ngTemplateOutletContext]="{formGroup: signInForm}"></ng-container>
+
+        <button mat-button
+                [disabled]="signInForm.invalid"
+                (click)="onSignInClick()">
+            Sign in
+        </button>
     </div>
 
     <div *ngSwitchCase="authOptionsType.SIGN_UP"
@@ -28,10 +34,10 @@
                     [placeholder]="'Your email'"
                     matInput
                     type="text">
-            <mat-error *ngIf="signInForm.hasError('email')">
+            <mat-error *ngIf="signUpForm.controls['email'].hasError('email')">
                 Enter a valid email
             </mat-error>
-            <mat-error *ngIf="signUpForm.hasError('required')">
+            <mat-error *ngIf="signUpForm.controls['email'].hasError('required')">
                 Email is <strong>required</strong>
             </mat-error>
         </mat-form-field>
@@ -40,6 +46,12 @@
                       [ngTemplateOutletContext]="{formGroup: signUpForm}"></ng-container>
         <ng-container [ngTemplateOutlet]="passwordTemplate"
                       [ngTemplateOutletContext]="{formGroup: signUpForm}"></ng-container>
+
+        <button mat-button
+                [disabled]="signUpForm.invalid"
+                (click)="onSignUpClick()">
+            Sign up
+        </button>
     </div>
 </div>
 
@@ -50,10 +62,10 @@
                 [placeholder]="'Your login'"
                 matInput
                 type="text">
-        <mat-error *ngIf="signInForm.hasError('max')">
+        <mat-error *ngIf="formGroup.controls['login'].hasError('max')">
             Max length is {{validationConstraints.LOGIN_MAX_LENGTH}}
         </mat-error>
-        <mat-error *ngIf="signUpForm.hasError('required')">
+        <mat-error *ngIf="formGroup.controls['login'].hasError('required')">
             Login is <strong>required</strong>
         </mat-error>
     </mat-form-field>
@@ -66,10 +78,10 @@
                 [placeholder]="'Your password'"
                 matInput
                 type="text">
-        <mat-error *ngIf="signInForm.hasError('max')">
+        <mat-error *ngIf="formGroup.controls['password'].hasError('max')">
             Max length is {{validationConstraints.PASSWORD_MAX_LENGTH}}
         </mat-error>
-        <mat-error *ngIf="signUpForm.hasError('required')">
+        <mat-error *ngIf="formGroup.controls['password'].hasError('required')">
             Password is <strong>required</strong>
         </mat-error>
     </mat-form-field>

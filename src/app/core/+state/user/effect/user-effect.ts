@@ -4,7 +4,7 @@ import { UserService } from '@core/services/user-service';
 import * as UserActions from '@core/+state/user/state/actions';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { AuthService } from '@core/services/auth-service';
-import { UserSignInRequest } from '@shared/models/DTO/requests/user-auth/user-sign-in-request';
+import { IHttpErrorResponse } from '@shared';
 
 @Injectable()
 export class UserEffect {
@@ -23,8 +23,8 @@ export class UserEffect {
                         return UserActions.initUserStateSuccess({ user });
                     }),
                     catchError((error) => {
-                        console.log(error);
-                        return of(UserActions.initUserStateFailed({ error: { type: 'asd', message: 'asdsadsad', status: 500 } }));
+                        setTimeout(() => { throw error; }, 0);
+                        return of(UserActions.initUserStateFailed({ error: error }));
                     }),
                 );
             }),
@@ -40,8 +40,8 @@ export class UserEffect {
                         return UserActions.getUserSuccess({ user });
                     }),
                     catchError((error) => {
-                        console.log(error);
-                        return of(UserActions.getUserFailed({ error: { type: 'asd', message: 'asdsadsad', status: 500 } }));
+                        setTimeout(() => { throw error; }, 0);
+                        return of(UserActions.getUserFailed({ error: error }));
                     }),
                 );
             }),
@@ -57,8 +57,8 @@ export class UserEffect {
                         return UserActions.signInSuccess({ user });
                     }),
                     catchError((error) => {
-                        console.log(error);
-                        return of(UserActions.signInFailed({ error: { type: 'asd', message: 'asdsadsad', status: 500 } }));
+                        setTimeout(() => { throw error; }, 0);
+                        return of(UserActions.signInFailed({ error: error }));
                     }),
                 );
             }),
@@ -74,8 +74,8 @@ export class UserEffect {
                         return UserActions.signUpSuccess({ user });
                     }),
                     catchError((error) => {
-                        console.log(error);
-                        return of(UserActions.signUpFailed({ error: { type: 'asd', message: 'asdsadsad', status: 500 } }));
+                        setTimeout(() => { throw error; }, 0);
+                        return of(UserActions.signUpFailed({ error: error }));
                     }),
                 );
             }),
@@ -91,8 +91,8 @@ export class UserEffect {
                         return UserActions.logOutSuccess();
                     }),
                     catchError((error) => {
-                        console.log(error);
-                        return of(UserActions.logOutFailed({ error: { type: 'asd', message: 'asdsadsad', status: 500 } }));
+                        setTimeout(() => { throw error; }, 0);
+                        return of(UserActions.logOutFailed({ error: error }));
                     }),
                 );
             }),

@@ -1,14 +1,16 @@
 import { ErrorConstraints } from '@shared/constraints/error-constraints';
+import { IHttpErrorResponse } from '@shared';
 
 const ErrorUtil = {
-    getErrorMessage: (err: any) => {
-        let reason = err.error ? err.error.reason : null;
+    getErrorMessage: (err: IHttpErrorResponse) => {
+        console.log(err);
+        let type = err.error ? err.error.type : null;
         for (let error of Object.keys(ErrorConstraints)) {
-            if (reason === ErrorConstraints[error as keyof typeof ErrorConstraints].reason) {
+            if (type === ErrorConstraints[error as keyof typeof ErrorConstraints].type) {
                 return ErrorConstraints[error as keyof typeof ErrorConstraints].message;
             }
         }
-        return reason ? ErrorConstraints.DEFAULT_ERROR.message : ErrorConstraints.SERVER_NOT_RESPONDING.message;
+        return type ? ErrorConstraints.DEFAULT_ERROR.message : ErrorConstraints.SERVER_NOT_RESPONDING.message;
     },
 };
 

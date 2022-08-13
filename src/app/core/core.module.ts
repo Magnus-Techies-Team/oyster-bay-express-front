@@ -37,9 +37,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     declarations: [],
     providers: [
         // guards
-        InitGuard,
         PublicGuard,
         PrivateGuard,
+        InitGuard,
 
         // services
         BaseService,
@@ -55,21 +55,5 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
             useClass: ErrorInterceptor,
         },
     ],
-    // exports: [
-    //     // common
-    //     ReactiveFormsModule,
-    //     CommonModule,
-    //
-    //     // init state and effect
-    //     InitStateModule,
-    //     InitEffectModule,
-    //
-    //     // user state and effect
-    //     UserStateModule,
-    //     UserEffectModule,
-    //
-    //     // router effect
-    //     RouterEffectModule,
-    // ],
 })
 export class CoreModule {}

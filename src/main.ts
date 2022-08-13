@@ -3,10 +3,21 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import { IConfig } from '@shared';
+import { APP_CONFIG } from '@shared/constraints/config-injection-token';
 
-if (environment.production) {
-  enableProdMode();
-}
+fetch('./assets/configs/config.json')
+    .then(response => response.json())
+    .then((config: IConfig) => {
+        if (environment.production) {
+            enableProdMode();
+        }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+        platformBrowserDynamic([
+            { 
+                provide: APP_CONFIG, 
+                useValue: config, 
+            },
+        ]).bootstrapModule(AppModule)
+            .catch(err => console.error(err));
+    });

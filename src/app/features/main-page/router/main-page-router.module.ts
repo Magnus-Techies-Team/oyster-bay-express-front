@@ -9,4 +9,5 @@ import { mainPageRoutes } from '@main-module/router/routes';
         RouterModule.forChild(mainPageRoutes),
     ],
 })
+
 export class MainPageRouterModule {}

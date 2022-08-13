@@ -12,7 +12,7 @@ export class MainPageRouterService {
     }
     
     toMainPage(): void {
-        this.router.navigate([this.moduleUrl]);
+        this.router.navigate(['/' + this.moduleUrl]);
     }
     
 }

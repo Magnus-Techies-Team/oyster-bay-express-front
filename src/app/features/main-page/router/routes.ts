@@ -1,16 +1,15 @@
 import { Routes } from '@angular/router';
-import { LoginPageComponent } from '@login-module/components/login-page/login-page.component';
+import { MainPageComponent } from '@main-module/components/main-page/main-page.component';
 import { RootComponent } from '../../root/root.component';
 
-export const loginPageRoutes: Routes = [
+export const mainPageRoutes: Routes = [
     {
         path: '',
         component: RootComponent,
         children: [
             {
                 path: '',
-                component: LoginPageComponent,
+                component: MainPageComponent,
             },
         ],
-    },
-];
+    }];

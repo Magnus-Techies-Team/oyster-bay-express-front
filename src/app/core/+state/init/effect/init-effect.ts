@@ -24,8 +24,8 @@ export class InitEffect {
                 }).pipe(
                     map(() => InitActions.initSuccess()),
                     catchError((error) => {
-                        console.log(error);
-                        return of(InitActions.initFailed({ error: { type: 'asd', message: 'asdsadsad', status: 500 } }));
+                        setTimeout(() => { throw error; }, 0);
+                        return of(InitActions.initFailed({ error: error }));
                     }),
                 );
             }),

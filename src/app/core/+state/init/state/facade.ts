@@ -4,7 +4,7 @@ import { State } from '@core/+state/init/state/reducer';
 import { Store } from '@ngrx/store';
 import * as InitSelectors from '@core/+state/init/state/selectors';
 import * as InitActions from '@core/+state/init/state/actions';
-import { IError } from '@shared';
+import { IHttpErrorResponse } from '@shared';
 
 @Injectable()
 export class InitFacade {
@@ -13,7 +13,7 @@ export class InitFacade {
 
     isLoaded$: Observable<boolean | null> = this.store.select(InitSelectors.getLoaded);
 
-    error$: Observable<IError | null> = this.store.select(InitSelectors.getError);
+    error$: Observable<IHttpErrorResponse | null> = this.store.select(InitSelectors.getError);
 
     constructor(private store: Store) {
     }
