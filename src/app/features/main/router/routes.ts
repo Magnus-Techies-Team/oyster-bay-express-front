@@ -1,15 +1,9 @@
 import { Routes } from '@angular/router';
-import { MainPageComponent } from '@main-module/components/main-page/main-page.component';
-import { RootComponent } from '../../root/root.component';
+import { MainPageComponent } from '@main/components/main-page/main-page.component';
 
 export const mainPageRoutes: Routes = [
     {
         path: '',
-        component: RootComponent,
-        children: [
-            {
-                path: '',
-                component: MainPageComponent,
-            },
-        ],
-    }];
+        component: MainPageComponent,
+    },
+];

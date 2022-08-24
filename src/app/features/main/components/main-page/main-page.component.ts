@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserFacade } from '@core/+state/user/state/facade';
+import { QuizRouterService } from '../../../quiz';
 
 @Component({
     selector: 'app-main',
@@ -8,13 +8,13 @@ import { UserFacade } from '@core/+state/user/state/facade';
 })
 export class MainPageComponent implements OnInit {
 
-    constructor(private userFacade: UserFacade) { }
+    constructor(private createQuizRouterService: QuizRouterService) { }
 
     ngOnInit(): void {
     }
-
-    public onLogoutClick(): void {
-        this.userFacade.logOut();
+    
+    onCreateQuizClick(): void {
+        this.createQuizRouterService.toCreateQuizPage();
     }
 
 }

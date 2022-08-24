@@ -7,7 +7,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { CoreModule } from '@core';
 import { AngularMaterialModule } from '@shared/angular-material/angular-material.module';
 import { routes } from './routes';
-import { RootComponent } from './features/root/root.component';
+import { RootComponent } from '@root';
+import { NotfoundComponent } from './features/notfound/notfound.component';
 
 @NgModule({
     imports: [
@@ -22,6 +23,7 @@ import { RootComponent } from './features/root/root.component';
     declarations: [
         AppComponent,
         RootComponent,
+        NotfoundComponent,
     ],
     providers: [
     ],

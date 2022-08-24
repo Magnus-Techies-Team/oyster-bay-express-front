@@ -21,8 +21,17 @@ export interface ICommonState {
     error: IHttpErrorResponse | null
 }
 
-export interface IConfig {
+export interface IConfig extends IApiConfig {
+    test: string;
+}
+
+export interface IApiConfig {
     api: string;
+}
+
+export interface IQuizTag {
+    type: string;
+    displayName: string;
 }
 
 

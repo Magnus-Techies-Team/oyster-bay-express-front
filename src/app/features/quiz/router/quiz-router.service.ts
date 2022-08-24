@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { RoutePathConstraints } from '@shared/constraints/route-path-constraints';
 
 @Injectable()
-export class CreateQuizRouterService {
+export class QuizRouterService {
     
     private featurePath = RoutePathConstraints.CREATE_QUIZ.fullPath;
     
@@ -11,7 +11,7 @@ export class CreateQuizRouterService {
     }
     
     toCreateQuizPage(): void {
-        this.router.navigate([this.featurePath]);
+        this.router.navigate([this.featurePath + '/create']);
     }
     
 }

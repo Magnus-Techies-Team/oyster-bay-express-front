@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { validationConstraints } from '@shared/constraints/validation-constraints';
+import { validationNumericConstraints } from '@shared/constraints/validation-numeric-constraints';
 import { UserFacade } from '@core/+state/user/state/facade';
 import { AuthOption, authOptions, AuthOptionsType } from '../../models/auth-options';
 
@@ -23,8 +23,8 @@ export class LoginPageComponent implements OnInit {
         return AuthOptionsType;
     }
 
-    public get validationConstraints(): typeof validationConstraints {
-        return validationConstraints;
+    public get validationConstraints(): typeof validationNumericConstraints {
+        return validationNumericConstraints;
     }
 
     
@@ -32,13 +32,13 @@ export class LoginPageComponent implements OnInit {
     constructor(private formBuilder: UntypedFormBuilder,
                 private userFacade: UserFacade) {
         this.signInForm = this.formBuilder.group({
-            login: ['test', [Validators.required, Validators.maxLength(validationConstraints.LOGIN_MAX_LENGTH)]],
-            password: ['12341234', [Validators.required, Validators.maxLength(validationConstraints.PASSWORD_MAX_LENGTH)]],
+            login: ['test', [Validators.required, Validators.maxLength(validationNumericConstraints.LOGIN_MAX_LENGTH)]],
+            password: ['12341234', [Validators.required, Validators.maxLength(validationNumericConstraints.PASSWORD_MAX_LENGTH)]],
         });
         this.signUpForm = this.formBuilder.group({
             email: ['test@re.re', [Validators.required, Validators.email]],
-            login: ['test', [Validators.required, Validators.maxLength(validationConstraints.LOGIN_MAX_LENGTH)]],
-            password: ['12341234', [Validators.required, Validators.maxLength(validationConstraints.PASSWORD_MAX_LENGTH)]],
+            login: ['test', [Validators.required, Validators.maxLength(validationNumericConstraints.LOGIN_MAX_LENGTH)]],
+            password: ['12341234', [Validators.required, Validators.maxLength(validationNumericConstraints.PASSWORD_MAX_LENGTH)]],
         });
         this.authOptions = Object.values(authOptions);
     }

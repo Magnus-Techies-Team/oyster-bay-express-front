@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule as NgRouterModule } from '@angular/router';
-import { loginPageRoutes } from '@login-module/router/routes';
+import { loginPageRoutes } from '@login/router/routes';
 
 @NgModule({
     imports: [

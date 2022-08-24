@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { UserFacade } from '@core/+state/user/state/facade';
 import { map, Observable } from 'rxjs';
 import { UrlTree } from '@angular/router';
-import { LoginPageRouterService } from '@login-module';
+import { LoginRouterService } from '@login';
 
 @Injectable()
 export class PrivateGuard {
     
     constructor(private userFacade: UserFacade,
-                private loginPageRouterService: LoginPageRouterService) {
+                private loginPageRouterService: LoginRouterService) {
     }
 
     canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {

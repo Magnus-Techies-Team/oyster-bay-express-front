@@ -1,4 +1,4 @@
-import { IQuestion } from '@shared/models/DTO/data-models/quiz-creation/quiz-question';
+import { IQuestion } from '@quiz/models/data-models/quiz-question';
 
 export interface IQuiz {
     title: string,

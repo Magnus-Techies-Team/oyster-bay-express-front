@@ -49,89 +49,13 @@
 
         </mat-form-field>
     </div>
-    <mat-accordion class="accordion"
-                   multi="true"
-                   [formGroup]="quizCreationForm">
-        <mat-expansion-panel *ngFor="let round of quizCreationForm.controls.rounds.controls; let i=index">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Round {{i + 1}}
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="base-container">
-                <mat-accordion class="accordion"
-                               multi="true">
-                    <mat-expansion-panel *ngFor="let topic of round.controls; let j=index">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Topic {{j + 1}}
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <div class="base-container"
-                             [formGroup]="topic">
-                            <div class="base-container" *ngIf="topic.controls.topicName as topicName">
-                                <mat-form-field class="topic-field">
-                                    <mat-label>Topic</mat-label>
-                                    <input  [formControlName]="'topicName'"
-                                            matInput
-                                            type="text">
-                                    <mat-error *ngIf="topicName.get('topicName')?.hasError('required')">
-                                        Topic is <strong>required</strong>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
 
-                            <div class="base-container"
-                                 [formGroup]="topicItem"
-                                 *ngFor="let topicItem of topic.controls.questions.controls; let k=index">
-                                <mat-form-field class="score-field">
-                                    <mat-label>Score</mat-label>
-                                    <input  [formControlName]="'score'"
-                                            matInput
-                                            type="text">
-                                    <mat-error *ngIf="topicItem.get('score')?.hasError('required')">
-                                        Score is <strong>required</strong>
-                                    </mat-error>
-                                    <mat-error *ngIf="topicItem.get('score')?.hasError('pattern')">
-                                        Score must be a numeric value <strong>only</strong>
-                                    </mat-error>
-                                </mat-form-field>
-                                <div class="q_and_a-container">
-                                    <mat-form-field class="question-field">
-                                        <mat-label>Question</mat-label>
-                                        <input  [formControlName]="'question'"
-                                                matInput
-                                                type="text">
-                                        <mat-error *ngIf="topicItem.get('question')?.hasError('required')">
-                                            Question is <strong>required</strong>
-                                        </mat-error>
-                                    </mat-form-field>
-                                    <mat-form-field class="question-field">
-                                        <mat-label>Answer</mat-label>
-                                        <input  [formControlName]="'answer'"
-                                                matInput
-                                                type="text">
-                                        <mat-error *ngIf="topicItem.get('answer')?.hasError('required')">
-                                            Answer is <strong>required</strong>
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                        </div>
-                    </mat-expansion-panel>
-                </mat-accordion>
-                <button mat-button
-                        (click)="onRemoveRoundClick(i)">
-                    Remove round
-                </button>
-            </div>
-        </mat-expansion-panel>
-        <button mat-button
-                (click)="onAddRoundClick()">
-            Add round
-        </button>
-        <mat-error *ngIf="quizCreationForm.controls.rounds.hasError('required')">At least one round is required</mat-error>
-    </mat-accordion>
+    <app-quiz
+            [quizCreationForm]="quizCreationForm"
+            (addRound)="addRound()"
+            (removeRound)="removeRound($event)">
+    </app-quiz>
+
     <button mat-button
             [disabled]="quizCreationForm.invalid"
             (click)="onCreateQuizClick()">

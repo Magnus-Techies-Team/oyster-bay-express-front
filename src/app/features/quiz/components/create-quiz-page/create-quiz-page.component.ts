@@ -3,19 +3,13 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import {  IQuizTag } from '@shared';
 import { QuizTagsConstraints } from '@shared/constraints/quiz-tags-constraints';
 import { validationPatternConstraints } from '@shared/constraints/validation-numeric-constraints';
-import { CreateQuizService } from '@create-quiz/services/create-quiz.service';
-import {
-    IQuizForm, IQuizQuestion,
-    IQuizRound,
-    IQuizRounds,
-    IQuizTopic,
-    IQuizTopicName,
-} from '@create-quiz/models/quiz-form';
-import { IQuiz } from '@shared/models/DTO/data-models/quiz-creation/quiz';
-import { IQuestion } from '@shared/models/DTO/data-models/quiz-creation/quiz-question';
-import { IQuizQuestionType } from '@shared/models/DTO/data-models/quiz-creation/quiz-question-type';
+import { IQuiz } from '@quiz/models/data-models/quiz';
+import { IQuestion } from '@quiz/models/data-models/quiz-question';
+import { IQuizQuestionType } from '@quiz/models/data-models/quiz-question-type';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarConstraints } from '@shared/constraints/snackbar-constraints';
+import { IQuizForm, IQuizQuestion, IQuizRound, IQuizRounds, IQuizTopic, IQuizTopicName } from '@quiz/models/data-models/quiz-form';
+import { QuizApiService } from '@core/services/api/quiz-api.service';
 
 @Component({
     selector: 'app-create-quiz-page',
@@ -30,8 +24,8 @@ export class CreateQuizPageComponent implements OnInit {
         questionsPerTopicAmount: 4,
         initialQuestionScore: 100,
         questionScoreDiffByRound: 100,
-        questionPlaceholder: 'Your question',
-        answerPlaceholder: 'Your answer',
+        questionPlaceholder: null,
+        answerPlaceholder: null,
     };
 
     // @ts-ignore
@@ -44,7 +38,7 @@ export class CreateQuizPageComponent implements OnInit {
     }
 
     constructor(private formBuilder: FormBuilder,
-                private createQuizService: CreateQuizService,
+                private quizApiService: QuizApiService,
                 private snackBar: MatSnackBar) {
         this.initForm();
     }
@@ -119,20 +113,20 @@ export class CreateQuizPageComponent implements OnInit {
         return topic;
     }
     
-    public onAddRoundClick(): void {
+    public addRound = () => {
         this.formConfig.roundsAmount += 1;
         this.quizCreationForm.controls.rounds.push(
             this.getNewRound({ 
                 roundNumber: this.formConfig.roundsAmount, 
             }),
         );
-    }
+    };
 
-    public onRemoveRoundClick(roundNumber: number): void {
+    public removeRound = (roundNumber: number) => {
         this.formConfig.roundsAmount -= 1;
         this.quizCreationForm.controls.rounds.removeAt(roundNumber);
         this.updateRounds({ startRoundIndex: roundNumber });
-    }
+    };
     
     private updateRounds(params: { startRoundIndex: number } = { startRoundIndex: 0 }): void {
         for (let i = params.startRoundIndex; i < this.formConfig.roundsAmount; i++) {
@@ -177,7 +171,7 @@ export class CreateQuizPageComponent implements OnInit {
             // form`s controls can have null values, but it is validated throw quizCreationForm.valid condition. 
             // But TS compile cannot accept this as valid check
             
-            this.createQuizService.createQuiz(quiz).subscribe(() => {
+            this.quizApiService.createQuiz(quiz).subscribe(() => {
                 this.snackBar.open('Quiz was successfully created!', 'OK', SnackbarConstraints['DEFAULT_POSITION']);
             });
         } else {

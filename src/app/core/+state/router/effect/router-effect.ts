@@ -3,16 +3,16 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as UserActions from '@core/+state/user/state/actions';
 import { tap } from 'rxjs';
-import { LoginPageRouterService } from '@login-module';
-import { MainPageRouterService } from '@main-module';
+import { LoginRouterService } from '@login';
+import { MainRouterService } from '@main';
 
 @Injectable()
 export class RouterEffect {
 
     constructor(private router: Router,
                 private actions$: Actions,
-                private loginPageRouterService: LoginPageRouterService,
-                private mainPageRouterService: MainPageRouterService) {
+                private loginPageRouterService: LoginRouterService,
+                private mainPageRouterService: MainRouterService) {
     }
 
     signInSuccess = createEffect(() => {

@@ -54,7 +54,7 @@ export class UserEffect {
             mergeMap(({ signInReq }) => {
                 return this.authService.signIn(signInReq).pipe(
                     map(user => {
-                        return UserActions.signInSuccess({ user });
+                        return UserActions.signInSuccess({ user: user.user } );
                     }),
                     catchError((error) => {
                         setTimeout(() => { throw error; }, 0);

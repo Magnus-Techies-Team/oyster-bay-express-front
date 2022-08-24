@@ -1,21 +1,25 @@
 import { NgModule } from '@angular/core';
 import { AngularMaterialModule } from '@shared/angular-material/angular-material.module';
-import { CreateQuizPageComponent } from './components/create-quiz-page/create-quiz-page.component';
-import { CreateQuizRouterModule } from '@create-quiz/router/create-quiz-router.module';
+import { QuizRouterModule } from './router/quiz-router.module';
 import { SharedModule } from '@shared/shared.module';
-import { CreateQuizService } from '@create-quiz/services/create-quiz.service';
+import { QuizService } from './services/quiz.service';
+import { ViewQuizPageComponent } from './components/view-quiz-page/view-quiz-page.component';
+import { CreateQuizPageComponent } from '@quiz/components/create-quiz-page/create-quiz-page.component';
+import { QuizComponent } from './dummies/quiz/quiz.component';
 
 @NgModule({
     imports: [
-        CreateQuizRouterModule,
+        QuizRouterModule,
         AngularMaterialModule,
         SharedModule,
     ],
     declarations: [
         CreateQuizPageComponent,
+        ViewQuizPageComponent,
+        QuizComponent,
     ],
     providers: [
-        CreateQuizService,
+        QuizService,
     ],
 })
-export class CreateQuizModule {}
+export class QuizModule {}
