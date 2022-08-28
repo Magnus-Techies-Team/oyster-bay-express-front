@@ -1,1 +1,25 @@
-<p>view-quiz-page works!</p>
+<div class="base-container quiz">
+    <div class="base-container quiz-info" *ngIf="quiz">
+        <div class="quiz-info-item">
+            <span class="quiz-info-item-title">Quiz name:</span>
+            <span class="quiz-info-item-value">
+                {{quiz.title}}
+            </span>
+        </div>
+        <div class="quiz-info-item">
+            <span class="quiz-info-item-title">Author:</span>
+            <span class="quiz-info-item-value">
+                {{quiz.author_username}}
+            </span>
+        </div>
+        <div class="quiz-info-item">
+            <span class="quiz-info-item-title">Tags:</span>
+            <span class="quiz-info-item-value">
+                {{getQuizTagsForDisplay()}}
+            </span>
+        </div>
+    </div>
+    <app-quiz [isViewOnly]="true"
+              [quizCreationForm]="quizForm">
+    </app-quiz>
+</div>

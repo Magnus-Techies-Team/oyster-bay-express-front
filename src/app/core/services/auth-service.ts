@@ -21,15 +21,15 @@ export class AuthService {
     }
 
     public signIn(signInReq: UserSignInRequest): Observable<ISignInResponse> {
-        return this.http.post<ISignInResponse>(this.apiUrl + this.apiRoute + '/login', signInReq);
+        return this.http.post<ISignInResponse>(this.apiUrl + this.apiRoute + '/signIn', signInReq);
     }
 
     public signUp(signUpReq: UserSignUpRequest): Observable<UserResponse> {
-        return this.http.post<UserResponse>(this.apiUrl + this.apiRoute + '/createUser', signUpReq );
+        return this.http.post<UserResponse>(this.apiUrl + this.apiRoute + '/signUp', signUpReq );
     }
 
-    public logOut(): Observable<void> {
-        return this.http.post<void>(this.apiUrl + this.apiRoute + '/logout', {});
+    public signOut(): Observable<void> {
+        return this.http.post<void>(this.apiUrl + this.apiRoute + '/signOut', {});
     }
 
 }

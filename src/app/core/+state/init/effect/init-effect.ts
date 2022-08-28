@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as InitActions from '@core/+state/init/state/actions';
 import { catchError, filter, forkJoin, map, mergeMap, of } from 'rxjs';
-import { UserFacade } from '@core/+state/user/state/facade';
+import { LobbyFacade } from '@core/+state/current-lobby/state';
 
 @Injectable()
 export class InitEffect {
 
     constructor(private readonly actions$: Actions,
-                private userFacade: UserFacade) {
+                private lobbyFacade: LobbyFacade) {
     }
 
     init$ = createEffect(() => {
@@ -16,11 +16,12 @@ export class InitEffect {
             ofType(InitActions.init),
             mergeMap(() => {
                 // list there all the facade inits
-                this.userFacade.initState();
+                console.log('in init effect');
+                this.lobbyFacade.initState();
 
                 // forkJoin is used for afterwards multi inits
                 return forkJoin({
-                    user: this.userFacade.userState$.pipe(filter(userState => userState.isLoaded)),
+                    activeLobby: this.lobbyFacade.state$.pipe(filter(lobbyState => lobbyState.isLoaded)),
                 }).pipe(
                     map(() => InitActions.initSuccess()),
                     catchError((error) => {

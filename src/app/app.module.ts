@@ -8,7 +8,8 @@ import { CoreModule } from '@core';
 import { AngularMaterialModule } from '@shared/angular-material/angular-material.module';
 import { routes } from './routes';
 import { RootComponent } from '@root';
-import { NotfoundComponent } from './features/notfound/notfound.component';
+import { NotfoundComponent } from '@notfound';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
     imports: [
@@ -19,6 +20,7 @@ import { NotfoundComponent } from './features/notfound/notfound.component';
         RouterModule.forRoot(routes),
         AngularMaterialModule,
         CoreModule,
+        StoreDevtoolsModule,
     ],
     declarations: [
         AppComponent,

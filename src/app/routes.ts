@@ -5,11 +5,12 @@ import { PrivateGuard } from '@core/guards/private-guard/private-guard';
 import { RootComponent } from '@root';
 import { RoutePathConstraints } from '@shared/constraints/route-path-constraints';
 import { NotfoundComponent } from '@notfound';
+import { UserGuard } from '@core/guards/user-guard/user-guard';
 
 export const routes:Routes = [
     {
         path: '',
-        canActivate: [InitGuard],
+        canActivate: [UserGuard],
         children: [
             {
                 path: RoutePathConstraints.LOGIN.routeName,
@@ -19,7 +20,7 @@ export const routes:Routes = [
             {
                 path: RoutePathConstraints.APP.routeName,
                 component: RootComponent,
-                canActivate: [PrivateGuard],
+                canActivate: [InitGuard, PrivateGuard],
                 children: [
                     {
                         path: RoutePathConstraints.MAIN.routeName,
@@ -28,6 +29,10 @@ export const routes:Routes = [
                     {
                         path: RoutePathConstraints.CREATE_QUIZ.routeName,
                         loadChildren: () => import('@quiz').then(m => m.QuizModule),
+                    },
+                    {
+                        path: RoutePathConstraints.LOBBY.routeName,
+                        loadChildren: () => import('@lobby').then(m => m.LobbyModule),
                     },
                     {
                         path: RoutePathConstraints.NOT_FOUND_PAGE.routeName,

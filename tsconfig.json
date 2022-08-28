@@ -35,6 +35,8 @@
       "@main/*": ["./src/app/features/main/*"],
       "@quiz": ["./src/app/features/quiz/index.ts"],
       "@quiz/*": ["./src/app/features/quiz/*"],
+      "@lobby": ["./src/app/features/lobby/index.ts"],
+      "@lobby/*": ["./src/app/features/lobby/*"],
       "@notfound": ["./src/app/features/notfound/index.ts"],
       "@notfound/*": ["./src/app/features/notfound/*"],
     }

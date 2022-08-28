@@ -1,0 +1,94 @@
+<div class="base-container">
+    <div class="base-container play-option">
+        <span class="play-option-title">Choose a quiz to create a lobby</span>
+        <div class="filters">
+            <span class="filters-title">Tags:</span>
+            <mat-select [(ngModel)]="selectedTags"
+                        [placeholder]="'Choose any tags'"
+                        (valueChange)="onChangeTag($event)"
+                        multiple>
+                <mat-select-trigger>
+                    <ng-template [ngIf]="selectedTags.length > 0"
+                                 [ngIfElse]="noSelectedTags">
+                        <span>{{getTagsToDisplay()}}</span>
+                    </ng-template>
+
+                    <ng-template #noSelectedTags>No tags selected</ng-template>
+                </mat-select-trigger>
+                <mat-option *ngFor="let tag of tags"
+                            [value]="tag">
+                    {{tag.displayName}}
+                </mat-option>
+            </mat-select>
+        </div>
+        <div class="base-container items-list">
+            <ng-template [ngIf]="initStatus.quizzes"
+                         [ngIfElse]="noQuizzes">
+                <div class="quiz base-container"
+                     *ngFor="let quiz of availableQuizzes"
+                     [class.selected]="selectedQuizId === quiz.id"
+                     (click)="onSelectQuizClick(quiz.id)">
+                    <div class="quiz-info">
+                        <div class="quiz-author">
+                            <span>Author:</span>
+                            <span>{{quiz.author_username}}</span>
+                        </div>
+                        <div class="quiz-name">
+                            <span>Quiz name:</span>
+                            <span>{{quiz.title}}</span>
+                        </div>
+                    </div>
+                    <div class="quiz-tags" *ngIf="!!quiz.tags">
+                        <div class="quiz-tags-title">Tags:</div>
+                        <div class="quiz-tag" *ngFor="let tag of quiz.tags">
+                            {{tagsConstraints[tag.toUpperCase()].displayName}}
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template #noQuizzes>No available quizzes</ng-template>
+        </div>
+        <button mat-button
+                [disabled]="!selectedQuizId"
+                (click)="onCreateLobbyClick()">
+            Create lobby
+        </button>
+    </div>
+
+    <div class="base-container play-option">
+        <span class="play-option-title">Choose a game to join</span>
+        <div class="base-container items-list">
+            <ng-template [ngIf]="initStatus.lobbies"
+                         [ngIfElse]="noLobbies">
+                <div class="base-container lobby" *ngFor="let lobby of availableLobbies">
+                    <div class="lobby-item">
+                        <span class="lobby-item-title">Lobby:</span>
+                        <div class="lobby-item-value">
+                            {{lobby.id}}
+                        </div>
+                    </div>
+                    <div class="lobby-item">
+                        <span class="lobby-item-title">Host:</span>
+                        <div class="lobby-item-value">
+                            {{lobby.host_name}}
+                        </div>
+                    </div>
+                    <div class="lobby-item">
+                        <span class="lobby-item-title">Players:</span>
+                        <div class="lobby-item-value" *ngFor="let player of lobby.users">
+                            <span>{{player.user_name}}</span>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template #noLobbies>No available lobbies</ng-template>
+        </div>
+        <button mat-button
+                [disabled]="!selectedLobbyId"
+                (click)="onJoinLobbyClick()">
+            Join lobby
+        </button>
+    </div>
+</div>

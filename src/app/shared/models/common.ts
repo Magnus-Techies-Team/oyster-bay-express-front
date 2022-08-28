@@ -29,9 +29,9 @@ export interface IApiConfig {
     api: string;
 }
 
-export interface IQuizTag {
-    type: string;
-    displayName: string;
+export interface HttpParameter {
+    key: string;
+    value: any
 }
 
 

@@ -4,7 +4,6 @@ import { UserService } from '@core/services/user-service';
 import * as UserActions from '@core/+state/user/state/actions';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { AuthService } from '@core/services/auth-service';
-import { IHttpErrorResponse } from '@shared';
 
 @Injectable()
 export class UserEffect {
@@ -86,7 +85,7 @@ export class UserEffect {
         return this.actions$.pipe(
             ofType(UserActions.logOut),
             mergeMap(() => {
-                return this.authService.logOut().pipe(
+                return this.authService.signOut().pipe(
                     map(() => {
                         return UserActions.logOutSuccess();
                     }),

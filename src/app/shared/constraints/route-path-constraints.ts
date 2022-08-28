@@ -15,6 +15,10 @@ export const RoutePathConstraints = {
         routeName: 'quiz',
         fullPath: 'app/quiz',
     },
+    LOBBY: {
+        routeName: 'lobby',
+        fullPath: 'app/lobby',
+    },
     NOT_FOUND_PAGE: {
         routeName: 'not-found',
         fullPath: 'app/not-found',

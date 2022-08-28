@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { IQuiz } from '@quiz/models/data-models/quiz';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiService } from '@core/services/api/api-service';
+import { GetAllQuizzesRequest, ICreateQuizRequest } from '@quiz/models/requests';
+import { IQuiz, IShortQuiz } from '@quiz/models/data-models';
 
 @Injectable()
 export class QuizApiService {
@@ -16,7 +17,7 @@ export class QuizApiService {
         this.apiUrl = this.apiService.apiConfig.api;
     }
 
-    public createQuiz(quiz: IQuiz): Observable<unknown> {
+    public createQuiz(quiz: ICreateQuizRequest): Observable<unknown> {
         return this.http.post<unknown>(this.apiUrl + this.apiRoute + '/createQuiz', quiz);
     }
 
@@ -24,8 +25,12 @@ export class QuizApiService {
         return this.http.get<IQuiz>(this.apiUrl + this.apiRoute + '/getQuiz/' + `${quizID}`);
     }
     
-    public getAllAvailableQuizzes(): Observable<IQuiz[]> {
-        return this.http.get<IQuiz[]>(this.apiUrl + this.apiRoute + '/getAllAvailableQuizzes');
+    public getAllAvailableQuizzes(req?: GetAllQuizzesRequest): Observable<IShortQuiz[]> {
+        const params: HttpParams = this.apiService.setHttpParams([{
+            key: 'tags',
+            value: req?.tags,
+        }]);
+        return this.http.get<IShortQuiz[]>(this.apiUrl + this.apiRoute + '/getAllAvailableQuizzes', { params: params });
     }
     
 }

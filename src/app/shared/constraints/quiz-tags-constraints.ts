@@ -1,4 +1,7 @@
-export const QuizTagsConstraints = {
+import { IQuizTag } from '@quiz/models/data-models';
+
+
+export const QuizTagsConstraints: { [key: string]: IQuizTag } = {
     DOTA2: {
         type: 'dota2',
         displayName: 'Dota 2',
@@ -19,4 +22,17 @@ export const QuizTagsConstraints = {
         type: 'normal',
         displayName: 'For normal people',
     },
+    MAMMALS: {
+        type: 'mammals',
+        displayName: 'Mammals',
+    },
+    FOOD: {
+        type: 'food',
+        displayName: 'Food',
+    },
+    OCEAN: {
+        type: 'ocean',
+        displayName: 'Ocean',
+    },
+
 };

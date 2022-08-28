@@ -9,6 +9,7 @@ import { CustomHttpInterceptor } from '@core/interceptors/http-interceptop';
 import { PublicGuard } from '@core/guards/public-guard/public-guard';
 import { PrivateGuard } from '@core/guards/private-guard/private-guard';
 import { InitGuard } from '@core/guards/init-guard/init-guard';
+import { UserGuard } from '@core/guards/user-guard/user-guard';
 
 // services
 import { BaseService } from '@core/services/base-service';
@@ -19,17 +20,21 @@ import { AuthService } from '@core/services/auth-service';
 // states
 import { InitStateModule } from '@core/+state/init/state/init-state-module';
 import { UserStateModule } from '@core/+state/user/state/user-state-module';
+import { CurrentLobbyStateModule } from '@core/+state/current-lobby/state';
 
 // effects
 import { UserEffectModule } from '@core/+state/user/effect/user-effect-module';
 import { InitEffectModule } from '@core/+state/init/effect/init-effect-module';
 import { RouterEffectModule } from '@core/+state/router/effect/router-effect-module';
+import { CurrentLobbyEffectsModule } from '@core/+state/current-lobby/effects';
 
 // features router services
 import { LoginRouterService } from '@login';
 import { MainRouterService } from '@main';
-import { QuizRouterService } from '../features/quiz';
+import { QuizRouterService } from '@quiz';
 import { QuizApiService } from '@core/services/api/quiz-api.service';
+import { LobbyApiService } from '@core/services/api/lobby-api.service';
+
 
 @NgModule({
     imports: [
@@ -41,6 +46,10 @@ import { QuizApiService } from '@core/services/api/quiz-api.service';
         UserStateModule,
         UserEffectModule,
         
+        // lobby state and effect
+        CurrentLobbyStateModule,
+        CurrentLobbyEffectsModule,
+        
         // router effect
         RouterEffectModule,
         
@@ -51,9 +60,11 @@ import { QuizApiService } from '@core/services/api/quiz-api.service';
     declarations: [],
     providers: [
         // guards
+        UserGuard,
         PublicGuard,
         PrivateGuard,
         InitGuard,
+
 
         // services
         BaseService,
@@ -66,6 +77,7 @@ import { QuizApiService } from '@core/services/api/quiz-api.service';
         LoginRouterService,
         MainRouterService,
         QuizRouterService,
+        LobbyApiService,
         {
             provide: ErrorHandler,
             useClass: ErrorInterceptor,

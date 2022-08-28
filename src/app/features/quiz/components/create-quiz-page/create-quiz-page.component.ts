@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import {  IQuizTag } from '@shared';
 import { QuizTagsConstraints } from '@shared/constraints/quiz-tags-constraints';
 import { validationPatternConstraints } from '@shared/constraints/validation-numeric-constraints';
-import { IQuiz } from '@quiz/models/data-models/quiz';
-import { IQuestion } from '@quiz/models/data-models/quiz-question';
 import { IQuizQuestionType } from '@quiz/models/data-models/quiz-question-type';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarConstraints } from '@shared/constraints/snackbar-constraints';
-import { IQuizForm, IQuizQuestion, IQuizRound, IQuizRounds, IQuizTopic, IQuizTopicName } from '@quiz/models/data-models/quiz-form';
 import { QuizApiService } from '@core/services/api/quiz-api.service';
+import {
+    IQuizCreateQuestion,
+    IQuizForm, IQuizFormQuestion,
+    IQuizFormRound, IQuizFormRounds,
+    IQuizFormTopic,
+    IQuizFormTopicName,
+    IQuizTag,
+} from '@quiz/models/data-models';
+import { ICreateQuizRequest } from '@quiz/models/requests';
+
 
 @Component({
     selector: 'app-create-quiz-page',
@@ -24,8 +30,8 @@ export class CreateQuizPageComponent implements OnInit {
         questionsPerTopicAmount: 4,
         initialQuestionScore: 100,
         questionScoreDiffByRound: 100,
-        questionPlaceholder: null,
-        answerPlaceholder: null,
+        questionPlaceholder: 'Your question',
+        answerPlaceholder: 'Your answer',
     };
 
     // @ts-ignore
@@ -44,24 +50,23 @@ export class CreateQuizPageComponent implements OnInit {
     }
 
     private initForm(): void {
-        const config = this.formConfig;
         let form: FormGroup<IQuizForm> = this.formBuilder.group({
             title: new FormControl<string | null>(null, [Validators.required]),
             isPrivate: new FormControl<boolean | null>(true, [Validators.required]),
-            tags: new FormControl<IQuizTag[] | null>([]),
-            rounds: new FormArray<IQuizRound | never>([], [Validators.required]),
+            tags: new FormControl<IQuizTag[] | null>([], [Validators.required, Validators.minLength(1)]),
+            rounds: new FormArray<IQuizFormRound | never>([], [Validators.required]),
         });
 
-        for (let i = 0; i < config.roundsAmount; i++) {
-            (form.controls.rounds as IQuizRounds).push(this.getNewRound({ roundNumber: i }));
+        for (let i = 0; i < this.formConfig.roundsAmount; i++) {
+            (form.controls.rounds as IQuizFormRounds).push(this.getNewRound({ roundNumber: i }));
         }
         
         this.quizCreationForm = form;
     }
     
-    private getNewRound(params: { roundNumber: number, roundData?: IQuizRound }): FormArray {
+    private getNewRound(params: { roundNumber: number, roundData?: IQuizFormRound }): FormArray {
         const config = this.formConfig;
-        let round: IQuizRound = this.formBuilder.array<IQuizTopic>([]);
+        let round: IQuizFormRound = this.formBuilder.array<IQuizFormTopic>([]);
         for (let j = 0; j < config.topicsAmount; j++) {
             round.push(
                 this.getNewTopic({ 
@@ -73,11 +78,11 @@ export class CreateQuizPageComponent implements OnInit {
         return round;
     }
     
-    private getNewTopic(params: { roundNumber: number, topicNumber: number, topicData?: IQuizTopic }): IQuizTopic {
+    private getNewTopic(params: { roundNumber: number, topicNumber: number, topicData?: IQuizFormTopic }): IQuizFormTopic {
         const config = this.formConfig;
-        let topic: IQuizTopic = this.formBuilder.group({
-            topicName: new FormControl(null, [Validators.required]) as IQuizTopicName,
-            questions: this.formBuilder.array<IQuizQuestion>([]),
+        let topic: IQuizFormTopic = this.formBuilder.group({
+            topicName: new FormControl(null, [Validators.required]) as IQuizFormTopicName,
+            questions: this.formBuilder.array<IQuizFormQuestion>([]),
         });
 
         if (params.topicData) {
@@ -93,7 +98,7 @@ export class CreateQuizPageComponent implements OnInit {
             let answer: string | null;
 
             if (params.topicData) {
-                const topicQuestion: IQuizQuestion = params.topicData.controls.questions.controls[k];
+                const topicQuestion: IQuizFormQuestion = params.topicData.controls.questions.controls[k];
                 question = topicQuestion.controls.question.value;
                 answer = topicQuestion.controls.answer.value;
             } else {
@@ -162,12 +167,12 @@ export class CreateQuizPageComponent implements OnInit {
     public onCreateQuizClick(): void {
         if (this.quizCreationForm.valid) {
             const form: FormGroup<IQuizForm> = this.quizCreationForm;
-            let quiz: IQuiz = {
+            let quiz: ICreateQuizRequest = {
                 title: form.controls.title.value,
                 private: form.controls.isPrivate.value,
                 tags: form.controls.tags.value?.map(tag => tag.type),
                 questions: this.getQuizQuestions(),
-            } as IQuiz;  
+            } as ICreateQuizRequest;
             // form`s controls can have null values, but it is validated throw quizCreationForm.valid condition. 
             // But TS compile cannot accept this as valid check
             
@@ -180,17 +185,17 @@ export class CreateQuizPageComponent implements OnInit {
         
     }
     
-    private getQuizQuestions(): IQuestion[] {
-        let questions: IQuestion[] = [];
+    private getQuizQuestions(): IQuizCreateQuestion[] {
+        let questions: IQuizCreateQuestion[] = [];
         
         for (let i = 0; i < this.formConfig.roundsAmount; i++) {
-            const round: IQuizRound = this.quizCreationForm.controls.rounds.controls[i];
+            const round: IQuizFormRound = this.quizCreationForm.controls.rounds.controls[i];
             
             for (let j = 0; j < this.formConfig.topicsAmount; j++) {
-                const topic: IQuizTopic = round.controls[j];
+                const topic: IQuizFormTopic = round.controls[j];
                 
-                for (let k = 1; k < this.formConfig.questionsPerTopicAmount; k++) {
-                    const topicQuestionItem: IQuizQuestion = topic.controls.questions.controls[k];
+                for (let k = 0; k < this.formConfig.questionsPerTopicAmount; k++) {
+                    const topicQuestionItem: IQuizFormQuestion = topic.controls.questions.controls[k];
                     const topicName: string = topic.controls.topicName.value as string;
                     
                     questions.push({
@@ -201,7 +206,7 @@ export class CreateQuizPageComponent implements OnInit {
                         topic: topicName,
                         type: IQuizQuestionType.text,
                         filepath: null,
-                    } as IQuestion);
+                    } as IQuizCreateQuestion);
                 }
             }
         }

@@ -19,6 +19,7 @@ export class InitFacade {
     }
 
     public init(): void {
+        console.log('in init facade');
         this.store.dispatch(InitActions.init());
     }
     

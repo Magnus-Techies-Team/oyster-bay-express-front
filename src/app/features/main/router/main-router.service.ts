@@ -14,5 +14,9 @@ export class MainRouterService {
     toMainPage(): void {
         this.router.navigate(['/' + this.featurePath]);
     }
+
+    toPlayGamePage(): void {
+        this.router.navigate(['/' + this.featurePath + '/play']);
+    }
     
 }
