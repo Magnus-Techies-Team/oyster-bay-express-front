@@ -16,10 +16,8 @@ export class InitGuard implements CanActivate {
     }
     
     canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        console.log('in init guard');
         return this.initFacade.isLoaded$.pipe(
             mergeMap(isLoaded => {
-                console.log(isLoaded);
                 if (isLoaded) {
                     return of(true);
                 } else {

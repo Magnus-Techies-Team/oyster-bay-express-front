@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { QuizTagsConstraints } from '@shared/constraints/quiz-tags-constraints';
 import { QuizApiService } from '@core/services/api/quiz-api.service';
 import { PlayGameInitStatus } from '@main/models';
 import { IQuizTag, IShortQuiz } from '@quiz/models/data-models';
-import { debounceTime, distinctUntilChanged, filter, Subject, switchMap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { LobbyApiService } from '@core/services/api/lobby-api.service';
 import { IAvailableLobby } from '@lobby/models/data-models/available-lobbies';
+import { LobbyRouterService } from '@lobby/router';
+import { isDefaultLobbyWSMessageBodyResponse } from '@lobby/models/responses/LobbyWSMessageResponse';
 
 @Component({
     selector: 'app-play-game',
     templateUrl: './play-game.component.html',
     styleUrls: ['./play-game.component.scss'],
 })
-export class PlayGameComponent implements OnInit {
+export class PlayGameComponent implements OnInit, OnDestroy {
 
     private tagChoiceDebounceTimeMs: number = 500;
 
@@ -37,14 +39,22 @@ export class PlayGameComponent implements OnInit {
     }
 
     private selectedTagsSubject: Subject<IQuizTag[]> = new Subject<IQuizTag[]>();
+    
+    private destroyed$: Subject<any> = new Subject<any>();
   
     constructor(private quizApiService: QuizApiService,
-                private lobbyApiService: LobbyApiService) { }
+                private lobbyApiService: LobbyApiService,
+                private lobbyRouterService: LobbyRouterService) { }
 
     ngOnInit(): void {
         this.getAllQuizzes();
         this.getAllAvailableLobbies();
         this.initSelectedTagsSubject();
+    }
+
+    ngOnDestroy() {
+        this.destroyed$.next(true);
+        this.destroyed$.complete();
     }
 
     private initSelectedTagsSubject(): void {
@@ -75,7 +85,8 @@ export class PlayGameComponent implements OnInit {
 
     private getAllAvailableLobbies(): void {
         this.lobbyApiService.getAllAvailableLobbies().subscribe(lobbies => {
-            this.availableLobbies = Array.from(lobbies.values());
+            this.availableLobbies = lobbies;
+            this.initStatus.lobbies = true;
         });
     }
 
@@ -88,11 +99,32 @@ export class PlayGameComponent implements OnInit {
     }
 
     public onCreateLobbyClick(): void {
-
+        if (this.selectedQuizId) {
+            this.lobbyApiService.createLobby({ quizId: this.selectedQuizId });
+            this.navigateToWaitingRoomAfterWSResponse();
+        }
     }
 
-    public onJoinLobbyClick(): void {
+    public onActiveLobbyClick(lobbyId: string): void {
+        this.selectedLobbyId = lobbyId;
+    }
 
+    public onEnterLobbyClick(): void {
+        if (this.selectedLobbyId) {
+            // this.lobbyApiService.spectateLobby({ lobbyId: this.selectedLobbyId });
+            // this.navigateToWaitingRoomAfterWSResponse();
+            this.lobbyRouterService.toWaitingRoom(this.selectedLobbyId);
+        }
+    }
+
+    private navigateToWaitingRoomAfterWSResponse(): void {
+        this.lobbyApiService.lobbyMessagesObs$.pipe(
+            takeUntil(this.destroyed$),
+        ).subscribe(message => {
+            if (isDefaultLobbyWSMessageBodyResponse(message.response)) {
+                this.lobbyRouterService.toWaitingRoom(message.response.lobby.id);
+            }
+        });
     }
 
 }

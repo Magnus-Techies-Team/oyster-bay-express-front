@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { IHttpErrorResponse } from '@shared';
 import { Store } from '@ngrx/store';
 import { State } from '@core/+state/current-lobby/state/reducer';
 import { getError, getLoaded, getLobbyState } from '@core/+state/current-lobby/state/selectors';
 import { init } from '@core/+state/current-lobby/state/actions';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class LobbyFacade {

@@ -1,6 +1,6 @@
 import { ICommonState } from '@shared';
 import { createReducer, on } from '@ngrx/store';
-import * as LobbyActions from './actions'; 
+import * as LobbyActions from './actions';
 
 export const CURRENT_LOBBY_FEATURE_KEY = 'current-lobby';
 
@@ -21,11 +21,12 @@ export const lobbyReducer = createReducer(
         isLoaded: false,
         error: null,
     })),
-    on(LobbyActions.initSuccess, (state, { activeLobbyId }) => ({
+    on(LobbyActions.initSuccess, (state, params ) => ({
         ...state,
         isLoaded: true,
         error: null,
-        activeLobbyId: activeLobbyId,
+        activeLobbyId: params.activeLobbyId,
+        
     })),
     on(LobbyActions.initFailed, (state, { error }) => ({
         ...state,

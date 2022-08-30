@@ -21,13 +21,16 @@ export interface ICommonState {
     error: IHttpErrorResponse | null
 }
 
+export interface IApiConfig {
+    api: string;
+    ws_api: string;
+}
+
 export interface IConfig extends IApiConfig {
     test: string;
 }
 
-export interface IApiConfig {
-    api: string;
-}
+
 
 export interface HttpParameter {
     key: string;

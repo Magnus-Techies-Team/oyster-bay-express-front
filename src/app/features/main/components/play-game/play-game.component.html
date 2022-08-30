@@ -61,7 +61,10 @@
         <div class="base-container items-list">
             <ng-template [ngIf]="initStatus.lobbies"
                          [ngIfElse]="noLobbies">
-                <div class="base-container lobby" *ngFor="let lobby of availableLobbies">
+                <div class="base-container lobby"
+                     [class.selected]="selectedLobbyId === lobby.id"
+                     *ngFor="let lobby of availableLobbies"
+                     (click)="onActiveLobbyClick(lobby.id)">
                     <div class="lobby-item">
                         <span class="lobby-item-title">Lobby:</span>
                         <div class="lobby-item-value">
@@ -71,7 +74,7 @@
                     <div class="lobby-item">
                         <span class="lobby-item-title">Host:</span>
                         <div class="lobby-item-value">
-                            {{lobby.host_name}}
+                            {{lobby.host.user_name}}
                         </div>
                     </div>
                     <div class="lobby-item">
@@ -87,7 +90,7 @@
         </div>
         <button mat-button
                 [disabled]="!selectedLobbyId"
-                (click)="onJoinLobbyClick()">
+                (click)="onEnterLobbyClick()">
             Join lobby
         </button>
     </div>

@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as InitActions from '@core/+state/init/state/actions';
-import { catchError, filter, forkJoin, map, mergeMap, of } from 'rxjs';
 import { LobbyFacade } from '@core/+state/current-lobby/state';
+import { LobbyApiService } from '@core/services/api/lobby-api.service';
+import { catchError, combineLatest, filter, map, mergeMap, of } from 'rxjs';
 
 @Injectable()
 export class InitEffect {
 
     constructor(private readonly actions$: Actions,
-                private lobbyFacade: LobbyFacade) {
+                private lobbyFacade: LobbyFacade,
+                private lobbyApiService: LobbyApiService) {
     }
 
     init$ = createEffect(() => {
@@ -16,12 +18,12 @@ export class InitEffect {
             ofType(InitActions.init),
             mergeMap(() => {
                 // list there all the facade inits
-                console.log('in init effect');
                 this.lobbyFacade.initState();
+                this.lobbyApiService.setLobbyConnection();
 
-                // forkJoin is used for afterwards multi inits
-                return forkJoin({
-                    activeLobby: this.lobbyFacade.state$.pipe(filter(lobbyState => lobbyState.isLoaded)),
+                // combineLatest is used for afterwards multi inits
+                return combineLatest({
+                    activeLobby: this.lobbyFacade.isLoaded$.pipe(filter(isLoaded => !!isLoaded)),
                 }).pipe(
                     map(() => InitActions.initSuccess()),
                     catchError((error) => {

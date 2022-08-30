@@ -1,1 +1,1 @@
-export * from './available-lobbies';
+export * from './AvailableLobbiesResponse';

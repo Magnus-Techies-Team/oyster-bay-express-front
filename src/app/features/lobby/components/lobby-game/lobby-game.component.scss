@@ -1,0 +1,184 @@
+.lobby{
+  width: 100%;
+  flex-direction: column;
+  height: calc(100vh - 88px);
+}
+
+.quiz-and-host{
+  width: 100%;
+}
+.players{
+  width: 100%;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.host{
+  flex-direction: column;
+  min-width: 300px;
+  align-items: center;
+}
+
+.participant-info{
+  display: flex;
+  align-items: center;
+}
+
+.host-title{
+  margin-right: 12px;
+}
+
+.title{
+  font-size: 26px;
+}
+
+.username{
+  font-size: 22px;
+}
+
+.host-actions{
+  display: flex;
+  align-items: center;
+}
+
+.host-button{
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+}
+
+.host-button.accept:hover{
+  background: lightgreen;
+}
+
+.host-button.accept {
+  margin-right: 12px;
+  background: green;
+}
+
+.host-button.accept:hover{
+  background: lightgreen;
+}
+
+.host-button.decline {
+  margin-right: 12px;
+  background: red;
+}
+
+.host-button.decline:hover{
+  background: orangered;
+}
+
+.quiz-block{
+  width: 100%;
+  flex-direction: column;
+}
+
+.participant{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 200px;
+  height: 200px;
+  border-radius: 4px;
+  border: 10px solid black;
+  background: cornflowerblue;
+}
+
+.participant.active {
+  border: 10px solid green;
+}
+
+.participant.disconnected {
+  border: 10px solid red;
+}
+
+.user-avatar{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 12px;
+}
+
+.host-block{
+  margin-bottom: 24px;
+}
+
+.quiz{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  background: lightgrey;
+}
+
+.quiz-topic{
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.quiz-cell{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  height: 70px;
+  border: 1px solid gray;
+  border-radius: 2px;
+  background: floralwhite;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+}
+
+.quiz-cell:hover {
+  background: lightgreen;
+}
+
+.quiz-cell.topic {
+  background: ghostwhite;
+  pointer-events: none;
+}
+
+.players{
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.take-button{
+  width: 100%;
+  height: 80px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all .1s ease-in-out;
+  background: cornflowerblue;
+}
+
+.game-options{
+  display: flex;
+  width: 100%;
+  margin-top: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-note{
+  width: 200px;
+  height: 80px;
+  background: lightgrey;
+  font-size: 24px;
+  border-radius: 5px;
+  margin-right: 24px;
+}
+
+.quiz-cell.disabled {
+  opacity: 1;
+}
+
+.quiz-cell.taken {
+  pointer-events: none;
+  opacity: .3;
+}

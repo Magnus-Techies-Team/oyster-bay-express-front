@@ -18,7 +18,6 @@ export class UserGuard implements CanActivate {
     canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         return this.userFacade.isLoaded$.pipe(
             mergeMap(isLoaded => {
-                console.log('in user guard', isLoaded);
                 if (isLoaded) {
                     return of(true);
                 } else {

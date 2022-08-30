@@ -13,7 +13,7 @@ export class UserFacade {
     
     public userState$: Observable<State> = this.store.select(UserSelectors.getUserState);
 
-    public isLoaded$: Observable<boolean> = this.store.select(UserSelectors.isLoaded);
+    public isLoaded$: Observable<boolean | null> = this.store.select(UserSelectors.isLoaded);
 
     public user$: Observable<UserResponse | null> = this.store.select(UserSelectors.getUser);
     
@@ -21,7 +21,6 @@ export class UserFacade {
     }
 
     public initState(): void {
-        console.log('in user init state facade');
         this.store.dispatch(UserActions.initUserState());
     }
 

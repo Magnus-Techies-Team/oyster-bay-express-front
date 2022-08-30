@@ -1,3 +1,8 @@
 .huge-font{
   font-size: 40px;
 }
+
+.disabled {
+  pointer-events: none;
+  opacity: .3;
+}

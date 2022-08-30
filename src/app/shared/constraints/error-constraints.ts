@@ -39,4 +39,8 @@ export const ErrorConstraints = {
         type: 'invalidEmail',
         message: 'Invalid email was provided',
     },
+    HOST_IN_GAME: {
+        type: 'hostInGame',
+        message: 'Host already in game',
+    },
 };

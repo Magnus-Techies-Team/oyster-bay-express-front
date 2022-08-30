@@ -12,14 +12,14 @@ export class UserEffect {
                 private userService: UserService,
                 private authService: AuthService) {
     }
-    
+
     init$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(UserActions.initUserState),
             mergeMap(() => {
                 return this.userService.getUser().pipe(
                     map(user => {
-                        return UserActions.initUserStateSuccess({ user });
+                        return UserActions.initUserStateSuccess({ user: user });
                     }),
                     catchError((error) => {
                         setTimeout(() => { throw error; }, 0);

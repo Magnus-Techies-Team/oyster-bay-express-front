@@ -16,6 +16,8 @@ import { BaseService } from '@core/services/base-service';
 import { ApiService } from '@core/services/api/api-service';
 import { UserService } from '@core/services/user-service';
 import { AuthService } from '@core/services/auth-service';
+import { QuizApiService } from '@core/services/api/quiz-api.service';
+import { LobbyApiService } from '@core/services/api/lobby-api.service';
 
 // states
 import { InitStateModule } from '@core/+state/init/state/init-state-module';
@@ -32,19 +34,21 @@ import { CurrentLobbyEffectsModule } from '@core/+state/current-lobby/effects';
 import { LoginRouterService } from '@login';
 import { MainRouterService } from '@main';
 import { QuizRouterService } from '@quiz';
-import { QuizApiService } from '@core/services/api/quiz-api.service';
-import { LobbyApiService } from '@core/services/api/lobby-api.service';
+import { LobbyRouterService } from '@lobby/router';
+import { NotfoundRouterService } from '@notfound/services/notfound-router.service';
 
 
 @NgModule({
     imports: [
-        // init state and effect
-        InitStateModule,
-        InitEffectModule,
+
         
         // user state and effect
         UserStateModule,
         UserEffectModule,
+
+        // init state and effect
+        InitStateModule,
+        InitEffectModule,
         
         // lobby state and effect
         CurrentLobbyStateModule,
@@ -66,18 +70,23 @@ import { LobbyApiService } from '@core/services/api/lobby-api.service';
         InitGuard,
 
 
-        // services
+        // base services
         BaseService,
-        ApiService,
         UserService,
         AuthService,
+        
+        // api services
+        ApiService,
         QuizApiService,
+        LobbyApiService,
         
         // router services
         LoginRouterService,
         MainRouterService,
         QuizRouterService,
-        LobbyApiService,
+        LobbyRouterService,
+        NotfoundRouterService,
+        
         {
             provide: ErrorHandler,
             useClass: ErrorInterceptor,

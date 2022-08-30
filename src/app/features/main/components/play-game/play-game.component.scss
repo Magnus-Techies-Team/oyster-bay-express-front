@@ -20,7 +20,7 @@
   margin-right: 12px;
 }
 
-.quiz{
+.quiz, .lobby{
   flex-direction: column;
   width: 100%;
   background: lightblue;
@@ -34,7 +34,7 @@
   background: lightgreen;
 }
 
-.quiz[class*=selected]{
+.quiz[class*=selected], .lobby[class*=selected]{
   border: 1px solid greenyellow;
   background: green;
 }
