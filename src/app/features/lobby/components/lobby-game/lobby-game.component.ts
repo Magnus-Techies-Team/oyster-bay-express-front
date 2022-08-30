@@ -69,9 +69,8 @@ export class LobbyGameComponent implements OnInit, OnDestroy {
                 }),
             ).subscribe(lobbyQuiz => {
                 this.quiz = lobbyQuiz.lobby.quiz;
-
                 const currentLobbyState: LobbyWSMessageResponse | null = this.lobbyApiService.lobbyMessagesSubject$.getValue();
-                console.log('state');
+
                 if (currentLobbyState) {
                     this.setLobbyData(currentLobbyState);
                 } else {
@@ -85,17 +84,15 @@ export class LobbyGameComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.destroy$.next(true);
         this.destroy$.complete();
-        // this.lobbyApiService.breakTheConnection();
     }
 
     private setLobbyData(data: LobbyWSMessageResponse): void {
-        // console.log('?', data, isDefaultLobbyWSMessageBodyResponse(data.response));
         if (isLobbyEndWSResponse(data.response)) {
+            this.lobbyInfo = data.response.lobby;
+            this.currentUser = data.response.currentUser;
             this.winner = data.response.winner;
-            console.log('WINNER!!!!!!', this.winner);
             return;
         } else if (isDefaultLobbyWSMessageBodyResponse(data.response)) {
-            console.log('NOOOOOO');
             this.lobbyInfo = data.response.lobby;
             this.currentUser = data.response.currentUser;
             this.splitCurrentRoundQuestionsByTopics();
@@ -112,7 +109,6 @@ export class LobbyGameComponent implements OnInit, OnDestroy {
     }
 
     private splitCurrentRoundQuestionsByTopics(): void {
-        console.log('spil method', this.quiz, this.lobbyInfo);
         if (this.quiz && this.lobbyInfo) {
             let topics: Map<string, IQuizLobbyQuestion[]> = new Map<string, IQuizLobbyQuestion[]>();
 
@@ -133,7 +129,6 @@ export class LobbyGameComponent implements OnInit, OnDestroy {
             topicsArray.forEach(topic => {
                 topic.questions.sort((a, b) => a.cost - b.cost);
             });
-            
 
             this.currentRoundTopics = topicsArray;
         }

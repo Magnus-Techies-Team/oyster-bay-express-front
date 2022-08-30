@@ -1,4 +1,5 @@
 <div class="base-container lobby" *ngIf="lobbyInfo">
+    {{lobbyInfo.state}}
     <ng-template [ngIf]="lobbyInfo.state === lobbyStatuses.STARTED"
                  [ngIfElse]="ended">
         <div class="base-container quiz-and-host">

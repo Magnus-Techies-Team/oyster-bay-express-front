@@ -40,7 +40,6 @@ export class WaitingRoomComponent implements OnInit, OnDestroy {
             this.lobbyId = this.route.snapshot.paramMap.get('id');
             if (this.lobbyId) {
                 const currentLobbyState: LobbyWSMessageResponse | null = this.lobbyApiService.lobbyMessagesSubject$.getValue();
-                console.log(this.lobbyApiService.connectionEstablished.getValue(), currentLobbyState);
                 if (currentLobbyState) {
                     this.setLobbyData(currentLobbyState);
                 } else {
@@ -63,10 +62,6 @@ export class WaitingRoomComponent implements OnInit, OnDestroy {
                 takeUntil(this.destroy$),
             ).subscribe(message => {
                 this.setLobbyData(message);
-                // if (isDefaultLobbyWSMessageBodyResponse(message.response)) {
-                //     this.lobbyInfo = message.response.lobby;
-                //     this.currentUser = message.response.currentUser;    
-                // }
             });
         }
     }
@@ -74,7 +69,6 @@ export class WaitingRoomComponent implements OnInit, OnDestroy {
     private setLobbyData(data: LobbyWSMessageResponse): void {
         if (isDefaultLobbyWSMessageBodyResponse(data.response)) {
             if (data.response.lobby.state === LobbyStatus.STARTED) {
-                console.log('LOBBY STARTED!!!!!!!!!');
                 this.lobbyRouterService.toGameRoom(data.response.lobby.id);   
             } else {
                 this.lobbyInfo = data.response.lobby;
@@ -90,7 +84,6 @@ export class WaitingRoomComponent implements OnInit, OnDestroy {
     }
 
     public onStartLobbyClick(): void {
-        console.log(this.lobbyId);
         if (this.lobbyId) {
             this.lobbyApiService.startLobby({ lobbyId: this.lobbyId });
         }

@@ -17,13 +17,14 @@ export class InitEffect {
         return this.actions$.pipe(
             ofType(InitActions.init),
             mergeMap(() => {
-                // list there all the facade inits
+                // list there all the inits
                 this.lobbyFacade.initState();
                 this.lobbyApiService.setLobbyConnection();
 
                 // combineLatest is used for afterwards multi inits
                 return combineLatest({
                     activeLobby: this.lobbyFacade.isLoaded$.pipe(filter(isLoaded => !!isLoaded)),
+                    connection : this.lobbyApiService.connectionEstablished.pipe(filter(v => v)),
                 }).pipe(
                     map(() => InitActions.initSuccess()),
                     catchError((error) => {

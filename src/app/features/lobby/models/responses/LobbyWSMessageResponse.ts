@@ -26,15 +26,6 @@ export interface LobbyEndWSResponse extends DefaultLobbyWSMessageBodyResponse {
     winner: ILobbyPlayer;
 }
 
-// export interface ValidateLobbyAnswerWSMessageBodyResponse extends DefaultLobbyWSMessageBodyResponse {
-//     actionInfo: {
-//         playerId: string;
-//         questionId: string;
-//         playerScore: number;
-//         isRight :boolean
-//     }
-// }
-
 export interface LobbyWSMessageError {
     error: IError;
 }

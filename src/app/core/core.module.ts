@@ -26,7 +26,7 @@ import { CurrentLobbyStateModule } from '@core/+state/current-lobby/state';
 
 // effects
 import { UserEffectModule } from '@core/+state/user/effect/user-effect-module';
-import { InitEffectModule } from '@core/+state/init/effect/init-effect-module';
+import { InitEffectModule } from '@core/+state/init/effect';
 import { RouterEffectModule } from '@core/+state/router/effect/router-effect-module';
 import { CurrentLobbyEffectsModule } from '@core/+state/current-lobby/effects';
 

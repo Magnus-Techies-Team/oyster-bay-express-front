@@ -38,7 +38,6 @@ export class ViewQuizPageComponent implements OnInit {
             this.quizApiService.getQuizByID(this.quizId).subscribe(quiz => {
                 this.quiz = quiz;
                 this.quizForm = this.quizService.initForm(quiz);
-                console.log(this.quizForm);
             });
         }
     }

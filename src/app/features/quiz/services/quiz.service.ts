@@ -41,7 +41,6 @@ export class QuizService {
                     topicNumber: j,
                     quiz: params.quiz,
                 }));
-            // console.log(round.controls[j]);
         }
         return round;
     }

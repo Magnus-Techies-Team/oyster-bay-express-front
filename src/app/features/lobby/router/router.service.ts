@@ -11,12 +11,10 @@ export class LobbyRouterService {
     }
     
     public toWaitingRoom(lobbyId: string): void {
-        console.log(this.featurePath + `${lobbyId}/waiting-room`);
         this.router.navigate([this.featurePath + `/${lobbyId}/waiting-room`]);
     }
 
     public toGameRoom(lobbyId: string): void {
-        console.log(this.featurePath + `/${lobbyId}/game-room`);
         this.router.navigate([this.featurePath + `/${lobbyId}/game-room`]);
     }
     
