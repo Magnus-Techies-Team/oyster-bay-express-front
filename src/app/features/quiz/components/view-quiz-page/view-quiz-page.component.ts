@@ -48,5 +48,4 @@ export class ViewQuizPageComponent implements OnInit {
         }
         return null;
     }
-
 }

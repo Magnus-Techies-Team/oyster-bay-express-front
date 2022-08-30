@@ -30,8 +30,6 @@ export interface IConfig extends IApiConfig {
     test: string;
 }
 
-
-
 export interface HttpParameter {
     key: string;
     value: any

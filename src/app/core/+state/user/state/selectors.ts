@@ -8,7 +8,7 @@ export const isLoaded = createSelector(
     (state) => (state.isLoaded),
 );
 
-export const getUser = createSelector(
+export const getUserValue = createSelector(
     getUserState,
     (state) => (state.currentUser),
 );

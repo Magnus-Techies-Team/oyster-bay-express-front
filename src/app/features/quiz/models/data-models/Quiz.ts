@@ -1,4 +1,4 @@
-import { IQuizQuestion } from '@quiz/models/data-models/quiz-question';
+import { IQuizQuestion } from '@quiz/models/data-models/QuizQuestion';
 
 export interface IShortQuiz {
     author: string;

@@ -1,1 +1,1 @@
-export * from './play-game-init-status';
+export * from './PlayGameInitStatus';

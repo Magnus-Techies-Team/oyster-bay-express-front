@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { validationNumericConstraints } from '@shared/constraints/validation-numeric-constraints';
 import { UserFacade } from '@core/+state/user/state/facade';
-import { AuthOption, authOptions, AuthOptionsType } from '../../models/auth-options';
+import { AuthOption, authOptions, AuthOptionsType } from '../../models/AuthOptions';
 
 @Component({
     selector: 'app-login-page',
     templateUrl: './login-page.component.html',
     styleUrls: ['./login-page.component.scss'],
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent {
 
     public signInForm: UntypedFormGroup;
 
@@ -27,8 +27,6 @@ export class LoginPageComponent implements OnInit {
         return validationNumericConstraints;
     }
 
-    
-    
     constructor(private formBuilder: UntypedFormBuilder,
                 private userFacade: UserFacade) {
         this.signInForm = this.formBuilder.group({
@@ -43,10 +41,7 @@ export class LoginPageComponent implements OnInit {
         this.authOptions = Object.values(authOptions);
     }
 
-    ngOnInit(): void {
-    }
-
-    onSignInClick(): void {
+    public onSignInClick(): void {
         const formControls: { [key: string]: AbstractControl } = this.signInForm.controls;
         if (this.signInForm.valid) {
             this.userFacade.signIn({ 
@@ -56,7 +51,7 @@ export class LoginPageComponent implements OnInit {
         }
     }
 
-    onSignUpClick(): void {
+    public onSignUpClick(): void {
         const formControls: { [key: string]: AbstractControl } = this.signUpForm.controls;
         if (this.signUpForm.valid) {
             this.userFacade.signUp({

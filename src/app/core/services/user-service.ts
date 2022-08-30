@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserResponse } from '@shared/models/DTO/responses/user/user-response';
+import { UserResponse } from '@shared/models/DTO/responses/user/UserResponse';
 import { APP_CONFIG } from '@shared/constraints/config-injection-token';
 import { IConfig } from '@shared';
 

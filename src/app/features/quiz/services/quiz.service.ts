@@ -67,5 +67,4 @@ export class QuizService {
         }
         return topic;
     }
-    
 }

@@ -1,3 +1,3 @@
-import { IAvailableLobby } from '@lobby/models/data-models/available-lobbies';
+import { IAvailableLobby } from '@lobby/models/data-models/AvailableLobby';
 
 export type IAvailableLobbiesResponse = IAvailableLobby[];

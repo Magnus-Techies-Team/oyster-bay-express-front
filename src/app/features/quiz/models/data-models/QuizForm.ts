@@ -1,5 +1,5 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { IQuizTag } from '@quiz/models/data-models/quiz-tag';
+import { IQuizTag } from '@quiz/models/data-models/QuizTag';
 
 
 export interface IQuizForm {

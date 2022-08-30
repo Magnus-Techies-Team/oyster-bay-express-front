@@ -4,12 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        FormsModule,
-        RouterTestingModule,
-    ],
+    imports: [],
     exports: [
         CommonModule,
         ReactiveFormsModule,

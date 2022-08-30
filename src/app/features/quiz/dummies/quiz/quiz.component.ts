@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IQuizForm } from '@quiz/models/data-models/quiz-form';
+import { IQuizForm } from '@quiz/models/data-models/QuizForm';
 
 @Component({
     selector: 'app-quiz',

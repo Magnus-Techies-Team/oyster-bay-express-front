@@ -1,4 +1,4 @@
-export * from './available-lobbies';
-export * from './lobby-status';
+export * from './AvailableLobby';
+export * from './LobbyStatus';
 export * from './LobbyUserStatus';
 export * from './LobbyMethods';

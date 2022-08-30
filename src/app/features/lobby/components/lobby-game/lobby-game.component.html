@@ -29,6 +29,12 @@
                         Decline answer
                     </button>
                 </div>
+                <div class="host-answer" *ngIf="lobbyInfo.currentQuestion &&
+                                                lobbyInfo.condition === lobbyConditions.HOST_VALIDATES_ANSWER &&
+                                                currentUser?.user_id === lobbyInfo.host.user_id">
+                    <span class="title host-title">Answer:</span>
+                    <span class="username host-name">{{lobbyInfo.currentQuestion.answer}}</span>
+                </div>
             </div>
 
             <div class="base-container quiz-block">

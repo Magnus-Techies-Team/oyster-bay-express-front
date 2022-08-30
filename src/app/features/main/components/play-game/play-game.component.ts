@@ -5,7 +5,7 @@ import { PlayGameInitStatus } from '@main/models';
 import { IQuizTag, IShortQuiz } from '@quiz/models/data-models';
 import { debounceTime, distinctUntilChanged, filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { LobbyApiService } from '@core/services/api/lobby-api.service';
-import { IAvailableLobby } from '@lobby/models/data-models/available-lobbies';
+import { IAvailableLobby } from '@lobby/models/data-models/AvailableLobby';
 import { LobbyRouterService } from '@lobby/router';
 import { isDefaultLobbyWSMessageBodyResponse } from '@lobby/models/responses/LobbyWSMessageResponse';
 
@@ -18,8 +18,12 @@ export class PlayGameComponent implements OnInit, OnDestroy {
 
     private tagChoiceDebounceTimeMs: number = 500;
 
-    public initStatus: PlayGameInitStatus = { quizzes: false, lobbies: false };
+    private selectedTagsSubject: Subject<IQuizTag[]> = new Subject<IQuizTag[]>();
     
+    private destroyed$: Subject<any> = new Subject<any>();
+
+    public initStatus: PlayGameInitStatus = { quizzes: false, lobbies: false };
+
     public selectedTags: IQuizTag[] = [];
 
     public availableQuizzes: IShortQuiz[] | undefined;
@@ -29,7 +33,7 @@ export class PlayGameComponent implements OnInit, OnDestroy {
     public availableLobbies: IAvailableLobby[] | undefined;
 
     public selectedLobbyId: string | undefined;
-    
+
     public get tags(): IQuizTag[] {
         return Object.values(QuizTagsConstraints);
     }
@@ -37,10 +41,6 @@ export class PlayGameComponent implements OnInit, OnDestroy {
     public get tagsConstraints(): typeof QuizTagsConstraints {
         return QuizTagsConstraints;
     }
-
-    private selectedTagsSubject: Subject<IQuizTag[]> = new Subject<IQuizTag[]>();
-    
-    private destroyed$: Subject<any> = new Subject<any>();
   
     constructor(private quizApiService: QuizApiService,
                 private lobbyApiService: LobbyApiService,
@@ -111,8 +111,6 @@ export class PlayGameComponent implements OnInit, OnDestroy {
 
     public onEnterLobbyClick(): void {
         if (this.selectedLobbyId) {
-            // this.lobbyApiService.spectateLobby({ lobbyId: this.selectedLobbyId });
-            // this.navigateToWaitingRoomAfterWSResponse();
             this.lobbyRouterService.toWaitingRoom(this.selectedLobbyId);
         }
     }
@@ -126,5 +124,4 @@ export class PlayGameComponent implements OnInit, OnDestroy {
             }
         });
     }
-
 }

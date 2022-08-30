@@ -18,7 +18,6 @@ import {
 import { LobbyStatusResponse } from '@lobby/models/responses/LobbyStatusResponse';
 import { LobbyMethods } from '@lobby/models/data-models';
 import {
-    isDefaultLobbyWSMessageBodyResponse,
     isLobbyWSConnectionEstablishedResponse, isLobbyWSMessageError,
     LobbyWSMessageError,
     LobbyWSMessageResponse,
@@ -26,7 +25,6 @@ import {
 import { WSError } from '@shared/utils/error-util';
 import { IError } from '@shared';
 import { LobbyQuizResponse } from '@lobby/models/responses/LobbyQuizResponse';
-
 
 @Injectable()
 export class LobbyApiService {

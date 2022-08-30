@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { QuizRouterService } from '@quiz';
 import { MainRouterService } from '@main/router/main-router.service';
 
@@ -7,12 +7,10 @@ import { MainRouterService } from '@main/router/main-router.service';
     templateUrl: './main-page.component.html',
     styleUrls: ['./main-page.component.scss'],
 })
-export class MainPageComponent implements OnInit {
+export class MainPageComponent {
 
     constructor(private createQuizRouterService: QuizRouterService,
-                private mainRouterService: MainRouterService) { }
-
-    ngOnInit(): void {
+                private mainRouterService: MainRouterService) {
     }
     
     public onCreateQuizClick(): void {
@@ -22,5 +20,4 @@ export class MainPageComponent implements OnInit {
     public onPlayClick(): void {
         this.mainRouterService.toPlayGamePage();
     }
-
 }

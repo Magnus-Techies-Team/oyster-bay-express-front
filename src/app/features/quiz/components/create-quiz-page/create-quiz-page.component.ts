@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuizTagsConstraints } from '@shared/constraints/quiz-tags-constraints';
 import { validationPatternConstraints } from '@shared/constraints/validation-numeric-constraints';
-import { IQuizQuestionType } from '@quiz/models/data-models/quiz-question-type';
+import { IQuizQuestionType } from '@quiz/models/data-models/QuizQuestionType';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarConstraints } from '@shared/constraints/snackbar-constraints';
 import { QuizApiService } from '@core/services/api/quiz-api.service';
@@ -16,13 +16,12 @@ import {
 } from '@quiz/models/data-models';
 import { ICreateQuizRequest } from '@quiz/models/requests';
 
-
 @Component({
     selector: 'app-create-quiz-page',
     templateUrl: './create-quiz-page.component.html',
     styleUrls: ['./create-quiz-page.component.scss'],
 })
-export class CreateQuizPageComponent implements OnInit {
+export class CreateQuizPageComponent {
 
     public formConfig = {
         roundsAmount: 3,
@@ -34,6 +33,7 @@ export class CreateQuizPageComponent implements OnInit {
         answerPlaceholder: 'Your answer',
     };
 
+    // init of the form is made in the constructors synchronous initForm() method
     // @ts-ignore
     public quizCreationForm: FormGroup<IQuizForm>;
 
@@ -212,8 +212,4 @@ export class CreateQuizPageComponent implements OnInit {
         }
         return questions;
     }
-
-    ngOnInit(): void {
-    }
-
 }

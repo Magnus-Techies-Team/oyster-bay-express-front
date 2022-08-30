@@ -32,8 +32,6 @@ export class LobbyGameComponent implements OnInit, OnDestroy {
 
     public winner: ILobbyPlayer | undefined;
 
-    // public activeQuestion: IQuizLobbyQuestion | undefined;
-
     private destroy$: Subject<boolean> = new Subject<boolean>();
 
     public get lobbyConditions(): typeof LobbyCondition {
@@ -54,7 +52,6 @@ export class LobbyGameComponent implements OnInit, OnDestroy {
     
     constructor(private lobbyApiService: LobbyApiService,
                 private route: ActivatedRoute) {
-        
     }
 
     ngOnInit(): void {
@@ -151,5 +148,4 @@ export class LobbyGameComponent implements OnInit, OnDestroy {
             this.lobbyApiService.validateLobbyAnswer({ isRight: isRight, lobbyId: this.lobbyInfo.id });
         }
     }
-
 }

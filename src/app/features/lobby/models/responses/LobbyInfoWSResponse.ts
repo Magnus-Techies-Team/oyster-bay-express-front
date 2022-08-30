@@ -4,7 +4,6 @@ import { LobbyStatus } from '@lobby/models/data-models';
 import { LobbyCondition } from '@lobby/models/data-models/LobbyCondition';
 import { LobbyShortQuestion } from '@lobby/models/data-models/LobbyShortQuestion';
 import { IQuizLobbyQuestion } from '@quiz/models/data-models/ILobbyQuizRoundsTitle';
-// import { IError } from '@shared';
 
 export interface LobbyInfoWSResponse {
     id: string;
@@ -19,5 +18,4 @@ export interface LobbyInfoWSResponse {
     condition: LobbyCondition,
     questions: LobbyShortQuestion[];
     currentQuestion: IQuizLobbyQuestion;
-    // error?: IError;
 }

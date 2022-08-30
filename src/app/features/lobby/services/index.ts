@@ -1,1 +1,1 @@
-export * from './lobby.service';
+export * from './lobby-rooms-shared-data.service';

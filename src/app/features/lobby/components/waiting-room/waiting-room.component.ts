@@ -88,5 +88,4 @@ export class WaitingRoomComponent implements OnInit, OnDestroy {
             this.lobbyApiService.startLobby({ lobbyId: this.lobbyId });
         }
     }
-
 }

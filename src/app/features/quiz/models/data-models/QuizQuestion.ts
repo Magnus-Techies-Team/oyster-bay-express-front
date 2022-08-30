@@ -1,4 +1,4 @@
-import { IQuizQuestionType } from '@quiz/models/data-models/quiz-question-type';
+import { IQuizQuestionType } from '@quiz/models/data-models/QuizQuestionType';
 
 export interface IQuizQuestion {
     answer: string,
