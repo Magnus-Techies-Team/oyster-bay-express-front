@@ -1,0 +1,41 @@
+.create-quiz{
+  display: flex;
+  flex-direction: column;
+}
+
+.options, .topics-options, .form-field{
+  display: flex;
+  align-items: center;
+}
+
+.options {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.topic-field{
+  max-width: 200px;
+  min-width: 100px;
+}
+
+.score-field{
+  max-width: 70px;
+}
+
+.question-field{
+  width: auto;
+  max-width: 200px;
+}
+
+.accordion{
+  width: 100%;
+}
+
+.topics-button{
+  margin-left: 12px;
+}
+
+.q_and_a-container{
+  display: flex;
+  flex-direction: column;
+}

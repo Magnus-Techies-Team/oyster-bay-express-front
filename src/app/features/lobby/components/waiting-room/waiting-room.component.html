@@ -1,0 +1,41 @@
+<div class="base-container" *ngIf="lobbyInfo">
+    <span class="title">Waiting room</span>
+    <div class="content" *ngIf="lobbyInfo">
+        <div class="content-item">
+            <span class="content-item-title">Quiz:</span>
+            <span class="content-item-value">{{lobbyInfo.quizId}}</span>
+        </div>
+        <div class="content-item">
+            <span class="content-item-title">Host:</span>
+            <span class="content-item-value">{{lobbyInfo.host.user_name}}</span>
+        </div>
+        <div class="content-item">
+            <span class="content-item-title">Players:</span>
+            <div class="players-list" *ngIf="lobbyInfo.users.length > 0">
+                <span class="player" *ngFor="let player of lobbyInfo.users">
+                    {{player.user_name}}
+                </span>
+            </div>
+        </div>
+        <div class="content-item">
+            <span class="content-item-title">Spectators:</span>
+            <div class="players-list" *ngIf="lobbyInfo.spectators.length > 0">
+                <span class="player" *ngFor="let spectator of lobbyInfo.spectators">
+                    {{spectator.user_name}}
+                </span>
+            </div>
+        </div>
+        <div class="content-item action-buttons" *ngIf="currentUser">
+            <button mat-button class="action-button"
+                    *ngIf="currentUser.status === userStatuses.HOST"
+                    (click)="onStartLobbyClick()">
+                Start Lobby
+            </button>
+            <button mat-button class="action-button"
+                    *ngIf="currentUser.status === userStatuses.SPECTATOR"
+                    (click)="onJoinLobbyClick()">
+                Join Lobby
+            </button>
+        </div>
+    </div>
+</div>

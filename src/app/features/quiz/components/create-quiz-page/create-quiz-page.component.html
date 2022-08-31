@@ -1,0 +1,64 @@
+<div class="create-quiz base-container">
+    <div class="options" [formGroup]="quizCreationForm">
+        <mat-form-field class="form-field">
+            <mat-label>Quiz title</mat-label>
+            <input  [formControlName]="'title'"
+                    matInput
+                    type="text">
+            <mat-error *ngIf="quizCreationForm.get('title')?.hasError('required')">
+                Title is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-slide-toggle [formControlName]="'isPrivate'">
+                Is private
+            </mat-slide-toggle>
+            <textarea matInput hidden></textarea>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select [formControlName]="'tags'"
+                        [placeholder]="'Choose any tags'"
+                        multiple>
+                <mat-select-trigger *ngIf="quizCreationForm.controls.tags as tagsControl">
+                    {{tagsControl.value?.[0]?.displayName || ''}}
+                    <span *ngIf="(tagsControl.value?.length || 0) > 1">
+                    (+{{(tagsControl.value?.length || 0) - 1}} other)
+                </span>
+                </mat-select-trigger>
+                <mat-option *ngFor="let tag of tags"
+                            [value]="tag">
+                    {{tag.displayName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Topics per round</mat-label>
+            <div class="topics-options">
+                <input  [(ngModel)]="newTopicsPerRoundAmount"
+                        [ngModelOptions]="{standalone: true}"
+                        matInput
+                        type="text">
+                <button mat-button
+                        class="topics-button"
+                        [disabled]="!+newTopicsPerRoundAmount || newTopicsPerRoundAmount < 1 || newTopicsPerRoundAmount == formConfig.topicsAmount"
+                        (click)="onTopicsAmountApply()"
+                >
+                    Apply
+                </button>
+            </div>
+
+        </mat-form-field>
+    </div>
+
+    <app-quiz
+            [quizCreationForm]="quizCreationForm"
+            (addRound)="addRound()"
+            (removeRound)="removeRound($event)">
+    </app-quiz>
+
+    <button mat-button
+            [disabled]="quizCreationForm.invalid"
+            (click)="onCreateQuizClick()">
+        Create quiz
+    </button>
+</div>

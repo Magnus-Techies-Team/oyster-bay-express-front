@@ -1,8 +1,8 @@
 import { createAction, props } from '@ngrx/store';
-import { UserResponse } from '@shared/models/DTO/responses/user/user-response';
+import { UserResponse } from '@shared/models/DTO/responses/user/UserResponse';
 import { IHttpErrorResponse } from '@shared';
-import { UserSignInRequest } from '@shared/models/DTO/requests/user-auth/user-sign-in-request';
-import { UserSignUpRequest } from '@shared/models/DTO/requests/user-auth/user-sign-up-request';
+import { UserSignInRequest } from '@shared/models/DTO/requests/user-auth/UserSignInRequest';
+import { UserSignUpRequest } from '@shared/models/DTO/requests/user-auth/UserSignUpRequest';
 
 export const initUserState = createAction('[User Facade] Init user state');
 export const initUserStateSuccess = createAction('[User Effect] Init user state succeeded', props<{ user: UserResponse }>());

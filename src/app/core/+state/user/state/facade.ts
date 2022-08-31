@@ -4,16 +4,18 @@ import { Observable } from 'rxjs';
 import { State } from '@core/+state/user/state/reducer';
 import * as UserActions from '@core/+state/user/state/actions';
 import * as UserSelectors from '@core/+state/user/state/selectors';
-import { UserResponse } from '@shared/models/DTO/responses/user/user-response';
-import { UserSignInRequest } from '@shared/models/DTO/requests/user-auth/user-sign-in-request';
-import { UserSignUpRequest } from '@shared/models/DTO/requests/user-auth/user-sign-up-request';
+import { UserResponse } from '@shared/models/DTO/responses/user/UserResponse';
+import { UserSignInRequest } from '@shared/models/DTO/requests/user-auth/UserSignInRequest';
+import { UserSignUpRequest } from '@shared/models/DTO/requests/user-auth/UserSignUpRequest';
 
 @Injectable()
 export class UserFacade {
     
     public userState$: Observable<State> = this.store.select(UserSelectors.getUserState);
 
-    public user$: Observable<UserResponse | null> = this.store.select(UserSelectors.getUser);
+    public isLoaded$: Observable<boolean | null> = this.store.select(UserSelectors.isLoaded);
+
+    public user$: Observable<UserResponse | null> = this.store.select(UserSelectors.getUserValue);
     
     constructor(private store: Store) {
     }

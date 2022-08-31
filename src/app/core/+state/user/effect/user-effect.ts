@@ -4,7 +4,6 @@ import { UserService } from '@core/services/user-service';
 import * as UserActions from '@core/+state/user/state/actions';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { AuthService } from '@core/services/auth-service';
-import { IHttpErrorResponse } from '@shared';
 
 @Injectable()
 export class UserEffect {
@@ -13,14 +12,14 @@ export class UserEffect {
                 private userService: UserService,
                 private authService: AuthService) {
     }
-    
+
     init$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(UserActions.initUserState),
             mergeMap(() => {
                 return this.userService.getUser().pipe(
                     map(user => {
-                        return UserActions.initUserStateSuccess({ user });
+                        return UserActions.initUserStateSuccess({ user: user });
                     }),
                     catchError((error) => {
                         setTimeout(() => { throw error; }, 0);
@@ -54,7 +53,7 @@ export class UserEffect {
             mergeMap(({ signInReq }) => {
                 return this.authService.signIn(signInReq).pipe(
                     map(user => {
-                        return UserActions.signInSuccess({ user });
+                        return UserActions.signInSuccess({ user: user.user } );
                     }),
                     catchError((error) => {
                         setTimeout(() => { throw error; }, 0);
@@ -86,7 +85,7 @@ export class UserEffect {
         return this.actions$.pipe(
             ofType(UserActions.logOut),
             mergeMap(() => {
-                return this.authService.logOut().pipe(
+                return this.authService.signOut().pipe(
                     map(() => {
                         return UserActions.logOutSuccess();
                     }),

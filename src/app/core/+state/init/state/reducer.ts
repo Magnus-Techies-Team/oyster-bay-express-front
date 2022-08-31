@@ -2,7 +2,7 @@ import { ICommonState } from '@shared';
 import { createReducer, on } from '@ngrx/store';
 import * as InitActions from './actions';
 
-export const INIT_FEATURE_KEY = 'user';
+export const INIT_FEATURE_KEY = 'init';
 
 export interface State extends ICommonState {}
 

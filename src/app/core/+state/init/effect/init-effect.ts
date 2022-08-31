@@ -1,26 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as InitActions from '@core/+state/init/state/actions';
-import { catchError, filter, forkJoin, map, mergeMap, of } from 'rxjs';
-import { UserFacade } from '@core/+state/user/state/facade';
+import { LobbyFacade } from '@core/+state/current-lobby/state';
+import { LobbyApiService } from '@core/services/api/lobby-api.service';
+import { catchError, combineLatest, filter, map, mergeMap, of } from 'rxjs';
 
 @Injectable()
 export class InitEffect {
 
     constructor(private readonly actions$: Actions,
-                private userFacade: UserFacade) {
+                private lobbyFacade: LobbyFacade,
+                private lobbyApiService: LobbyApiService) {
     }
 
     init$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(InitActions.init),
             mergeMap(() => {
-                // list there all the facade inits
-                this.userFacade.initState();
+                // list there all the inits
+                this.lobbyFacade.initState();
+                this.lobbyApiService.setLobbyConnection();
 
-                // forkJoin is used for afterwards multi inits
-                return forkJoin({
-                    user: this.userFacade.userState$.pipe(filter(userState => userState.isLoaded)),
+                // combineLatest is used for afterwards multi inits
+                return combineLatest({
+                    activeLobby: this.lobbyFacade.isLoaded$.pipe(filter(isLoaded => !!isLoaded)),
+                    connection : this.lobbyApiService.connectionEstablished.pipe(filter(v => v)),
                 }).pipe(
                     map(() => InitActions.initSuccess()),
                     catchError((error) => {

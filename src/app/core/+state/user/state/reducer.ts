@@ -1,4 +1,4 @@
-import { UserResponse } from '@shared/models/DTO/responses/user/user-response';
+import { UserResponse } from '@shared/models/DTO/responses/user/UserResponse';
 import { createReducer, on } from '@ngrx/store';
 import * as UserActions from './actions';
 import { ICommonState } from '@shared';

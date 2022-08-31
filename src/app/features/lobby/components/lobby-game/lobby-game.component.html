@@ -1,0 +1,112 @@
+<div class="base-container lobby" *ngIf="lobbyInfo">
+    {{lobbyInfo.state}}
+    <ng-template [ngIf]="lobbyInfo.state === lobbyStatuses.STARTED"
+                 [ngIfElse]="ended">
+        <div class="base-container quiz-and-host">
+            <div class="base-container host">
+                <div class="participant host-block"
+                     [class.active]="lobbyInfo.host.user_id === lobbyInfo.assignee"
+                     [class.disconnected]="lobbyInfo.host.state === playerStates.DISCONNECTED">
+                    <img alt="avatar" src="assets/img/user/user-avatar.png" class="user-avatar">
+                    <div class="participant-info">
+                        <span class="title host-title">Host:</span>
+                        <span class="username host-name">{{lobbyInfo.host.user_name}}</span>
+                    </div>
+                </div>
+
+
+                <div class="host-actions" *ngIf="currentUser?.user_id === lobbyInfo.host.user_id">
+                    <button mat-button
+                            class="host-button accept"
+                            [class.disabled]="lobbyInfo.condition !== lobbyConditions.HOST_VALIDATES_ANSWER"
+                            (click)="onValidateAnswerClick(true)">
+                        Accept answer
+                    </button>
+                    <button mat-button
+                            class="host-button decline"
+                            [class.disabled]="lobbyInfo.condition !== lobbyConditions.HOST_VALIDATES_ANSWER"
+                            (click)="onValidateAnswerClick(false)">
+                        Decline answer
+                    </button>
+                </div>
+                <div class="host-answer" *ngIf="lobbyInfo.currentQuestion &&
+                                                lobbyInfo.condition === lobbyConditions.HOST_VALIDATES_ANSWER &&
+                                                currentUser?.user_id === lobbyInfo.host.user_id">
+                    <span class="title host-title">Answer:</span>
+                    <span class="username host-name">{{lobbyInfo.currentQuestion.answer}}</span>
+                </div>
+            </div>
+
+            <div class="base-container quiz-block">
+                <div class="active-question" *ngIf="lobbyInfo.currentQuestion">
+                    {{lobbyInfo.currentQuestion.question}}
+                </div>
+
+                <div class="quiz" *ngIf="quiz && !lobbyInfo.currentQuestion">
+                    <div class="quiz-topic" *ngFor="let topic of currentRoundTopics">
+                        <div class="quiz-cell topic">{{topic.topicName}}</div>
+                        <div class="quiz-cell question"
+                             [class.disabled]="currentUser?.user_id !== lobbyInfo.host.user_id"
+                             [class.taken]="question.questionStatus === questionStatuses.TAKEN"
+                             *ngFor="let question of topic.questions"
+                             (click)="onQuestionClick(question.id)">
+                            {{question.cost}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="base-container players">
+            <div class="participant player-block"
+                 [class.active]="player.user_id === lobbyInfo.assignee"
+                 [class.disconnected]="player.state === playerStates.DISCONNECTED"
+                 *ngFor="let player of lobbyInfo.users">
+                <img alt="avatar" src="assets/img/user/user-avatar.png" class="user-avatar">
+                <div class="participant-info">
+                    <span class="username player-name">{{player.user_name}}</span>
+                </div>
+                <div class="participant-info">
+                    <span class="title">Score:</span>
+                    <span class="username">{{player.points}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-options">
+            <div class="game-note">
+                <ng-template [ngIf]="lobbyInfo.condition === lobbyConditions.HOST_VALIDATES_ANSWER">
+                    Host validates the answer
+                </ng-template>
+                <ng-template [ngIf]="lobbyInfo.condition === lobbyConditions.PLAYERS_TAKE_QUESTION">
+                    Players are taking the question
+                </ng-template>
+                <ng-template [ngIf]="lobbyInfo.condition === lobbyConditions.PLAYER_CHOOSES_QUESTION">
+                    Player chooses the question and the host sets it
+                </ng-template>
+            </div>
+            <button mat-button class="take-button"
+                    [class.disabled]="lobbyInfo.condition !== lobbyConditions.PLAYERS_TAKE_QUESTION ||
+                                  currentUser?.user_id === lobbyInfo.host.user_id"
+                    (click)="onTakeQuestionClick()">
+                Take question
+            </button>
+        </div>
+    </ng-template>
+
+    <ng-template #ended>
+        <div class="lobby-ended" *ngIf="winner">
+            <div class="congratulations">CONGRATULATIONS !!!</div>
+            <div class="participant player-block">
+                <img alt="avatar" src="assets/img/user/user-avatar.png" class="user-avatar">
+                <div class="participant-info">
+                    <span class="username player-name">{{winner.user_name}}</span>
+                </div>
+                <div class="participant-info">
+                    <span class="title">Score:</span>
+                    <span class="username">{{winner.points}}</span>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>
